@@ -66,7 +66,7 @@ const ForgotPassword = () => {
     <div className="max-w-[400px] m-auto">
       {isForgotPassword ? (
         <>
-          <div className="text-2x1 font-bold text-center mb-10">
+          <div className="text-2xl font-bold text-center mb-10">
             パスワード再設定メール送信
           </div>
           <div className="">

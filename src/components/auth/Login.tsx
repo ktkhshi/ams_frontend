@@ -70,7 +70,7 @@ const Login = () => {
 
   return (
     <div className="max-w-[400px] m-auto">
-      <div className="text-2x1 font-bold text-center mb-10">ログイン</div>
+      <div className="text-2xl font-bold text-center mb-10">ログイン</div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
