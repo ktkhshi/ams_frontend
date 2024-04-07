@@ -192,3 +192,54 @@ export const resetPassword = async ({
     }
   }
 }
+
+export interface UserDetailType {
+  uid: string
+  name: string
+  email: string
+  avatar: string | undefined
+  introduction: string
+  created_at: string
+}
+
+interface GetUserDetailProps {
+  uid: string
+}
+
+// ユーザ詳細取得
+export const getUserDetail = async ({ uid }: GetUserDetailProps) => {
+  try {
+    console.error(`${process.env.API_URL}/api/users/${uid}/`)
+    // APIからユーザー詳細を取得
+    const apiRes = await fetch(`${process.env.API_URL}/api/users/${uid}/`, {
+        method: "GET",
+        cache: "no-store",
+      })
+
+    console.error(apiRes.ok)
+
+    // APIレスポンスが正常ではない場合、失敗とnullを返す
+    if (!(apiRes.ok)) {
+      return {
+        success: false,
+        user: null,
+      }
+    }
+
+    // レスポンスをJSONとして解析し、ユーザ詳細を取得
+    const user: UserDetailType = await apiRes.json()
+
+    // 成功と取得したユーザ詳細を返す
+    return {
+      success: true,
+      user,
+    }
+  } catch (error) {
+    console.error(error)
+    // エラー発生時に、失敗とnullを返す
+    return {
+      success: false,
+      user: null,
+    }
+  }
+}

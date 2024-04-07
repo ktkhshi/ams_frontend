@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 interface CompleteSignupPageProps {
-  param: {
+  params: {
     uid: string
     token: string
   }
