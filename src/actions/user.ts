@@ -243,3 +243,113 @@ export const getUserDetail = async ({ uid }: GetUserDetailProps) => {
     }
   }
 }
+
+interface UpdateUserProps {
+  accessToken: string
+  name: string
+  introduction: string | undefined
+  avatar: string | undefined
+}
+
+// プロフィール編集
+export const updateUser = async ({
+  accessToken,
+  name,
+  introduction,
+  avatar
+}: UpdateUserProps) => {
+  try {
+    const body = JSON.stringify({
+      name,
+      introduction,
+      avatar,
+    })
+
+    // プロフィール編集を送信
+    const apiRes = await fetch(`${process.env.API_URL}/api/auth/users/me/`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `JWT ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body,
+    })
+
+    // APIレスポンスが正常ではない場合、失敗とnullを返す
+    if (!apiRes.ok) {
+      return {
+        success: false,
+        user: null,
+      }
+    }
+
+    // レスポンスをJSONとして解析し、ユーザ詳細を取得
+    const user: UserDetailType = await apiRes.json()
+
+    // 成功と取得したユーザ詳細を返す
+    return {
+      success: true,
+      user,
+    }
+  } catch (error) {
+    console.error(error)
+    // エラー発生時に、失敗とnullを返す
+    return {
+      success: false,
+      user: null,
+    }
+  }
+}
+
+interface UpdatePasswordProps {
+  accessToken: string
+  currentPassword: string
+  newPassword: string
+  reNewPassword: string
+}
+
+export const updatePassword = async ({
+  accessToken,
+  currentPassword,
+  newPassword,
+  reNewPassword,
+}: UpdatePasswordProps) => {
+  try {
+    const body = JSON.stringify({
+      current_password: currentPassword,
+      new_password: newPassword,
+      re_new_password: reNewPassword,
+    })
+
+    // パスワード変更を送信
+    const apiRes = await fetch(
+      `${process.env.API_URL}/api/auth/users/set_password/`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `JWT ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body,
+      }
+    )
+
+    // APIレスポンスが正常ではない場合、失敗を返す
+    if (!apiRes.ok) {
+      return {
+        success: false,
+      }
+    }
+
+    // 成功を返す
+    return {
+      success: true,
+    }
+  } catch (error) {
+    console.error(error)
+    // エラー発生時に、失敗を返す
+    return {
+      success: false,
+    }
+  }
+}
