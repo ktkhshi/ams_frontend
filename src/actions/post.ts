@@ -1,7 +1,6 @@
 "use server"
 
 import { UserType } from "@/lib/nextauth"
-import { headers } from "next/headers"
 
 // 共通のAPIリクエスト
 const fetchAPI = async (url: string, options: RequestInit) => {
@@ -123,4 +122,71 @@ export const createPost = async ({
   const post: PostType = await result.data
 
   return { success: true, post }
+}
+
+interface UpdatePostType {
+  accessToken: string
+  postId: string
+  title: string
+  content: string
+  image: string | undefined
+}
+
+// 投稿編集
+export const updatePost = async ({
+  accessToken,
+  postId,
+  title,
+  content,
+  image,
+}: UpdatePostType) => {
+  const body = JSON.stringify({
+    title: title,
+    content: content,
+    image: image,
+  })
+
+  const options = {
+    method: "PATCH",
+    headers: {
+      Authorization: `JWT ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body,
+  }
+
+  // 投稿編集を送信
+  const result = await fetchAPI(`/api/posts/${postId}/`, options)
+
+  if (!result.success) {
+    console.error(result.error)
+    return { success: false }
+  }
+
+  return { success: true }
+}
+
+interface DeletePostType {
+  accessToken: string
+  postId: string
+}
+
+// 投稿削除
+export const deletePost = async ({ accessToken, postId }: DeletePostType) => {
+  const options = {
+    method: "DELETE",
+    headers: {
+      Authorization: `JWT ${accessToken}`,
+    }
+  }
+
+  // 投稿削除を送信
+  const result = await fetchAPI(`/api/posts/${postId}/`, options)
+
+  if (!result.success) {
+    console.error(result.error)
+    return { success: false} 
+  }
+  
+  return { success: true }
 }
