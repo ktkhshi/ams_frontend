@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "勤怠管理システム",
-  description: "（仮）",
+  description: "勤怠管理システム（仮）",
 };
 
 // export default function RootLayout({
@@ -55,12 +55,12 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
               <div className="text-center text-sm">
                 Copyright © All rights reserved |{" "}
                 <a
-                  href="https://www.youtube.com/@fullstackchannel"
+                  href=""
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline"
                 >
-                  FullStackChannel
+                  ktkhshi
                 </a>
               </div>
             </footer>
