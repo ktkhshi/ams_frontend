@@ -13,7 +13,7 @@ interface NavigationProps {
 const Navigation = ({ user }: NavigationProps) => {
   return (
     <header className="shadow-lg shadow-gray-100 mb-10">
-      <div className="container mx-auto flex max-w-screen-md items-center justify-between px-2 py-3">
+      <div className="container mx-auto flex max-w-screen-2xl items-center justify-between px-2 py-3">
         <Link href="/" className="cursor-pointer text-xl font-bold">
           勤怠管理システム
         </Link>

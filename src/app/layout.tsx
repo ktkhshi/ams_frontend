@@ -46,7 +46,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             <Navigation user={user} />
             <ToastProvider/>
 
-            <main className="container mx-auto max-w-screen-md flex-1 px-2">
+            <main className="container mx-auto max-w-screen-2xl flex-1 px-2">
               {children}
             </main>
 
