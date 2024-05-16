@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 import {
   ColumnDef,
@@ -38,6 +39,11 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="text-2xl font-bold text-left mb-5">クライアント一覧</div>
+      <div className="text-right mb-5">
+        <Button asChild className="font-bold">
+            <Link href="/client/new">新規登録</Link>
+          </Button>
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>

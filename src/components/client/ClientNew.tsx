@@ -20,6 +20,7 @@ import { Loader2 } from "lucide-react"
 import { createClient } from "@/actions/client"
 import { UserType } from "@/lib/nextauth"
 import toast from "react-hot-toast"
+import Link from "next/link"
 
 // 入力データの検証ルールを定義
 const schema = z.object({
@@ -71,7 +72,7 @@ const ClientNew = ({ user }: ClientNewProps) => {
       }
 
       toast.success("作成しました")
-      router.push(`/post/${res.client.uid}`)
+      router.push(`/client`)
       router.refresh()
     } catch (error) {
       toast.error("作成に失敗しました")
@@ -81,58 +82,68 @@ const ClientNew = ({ user }: ClientNewProps) => {
   }
 
   return (
-    <div>
-      <div className="text-2xl font-bold text-center mb-5">新規クライアント</div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          <FormField
-            control={form.control}
-            name="person_in_charge"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>担当者の氏名</FormLabel>
-                <FormControl>
-                  <Input placeholder="担当者の氏名" {...field} />
-                </FormControl>
-                <FormMessage/>
-              </FormItem>
-            )}
-          />
+    <div className="flex justify-center">
+      <div className="w-1/2">
+        <div className="text-2xl font-bold text-center mb-5">新規クライアント</div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <FormField
+              control={form.control}
+              name="person_in_charge"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>担当者の氏名</FormLabel>
+                  <FormControl>
+                    <Input placeholder="担当者の氏名" {...field} />
+                  </FormControl>
+                  <FormMessage/>
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>住所</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="住所" {...field}/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>住所</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="住所" {...field} rows={2} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="note"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>備考</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="備考" {...field} rows={3} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button disabled={isLoading} type="submit" className="w-full">
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>}
-            作成
-          </Button>
-        </form>
-      </Form>
+            <FormField
+              control={form.control}
+              name="note"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>備考</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="備考" {...field} rows={3} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex">
+              <div className="w-1/2 flex items-center mx-5">
+                <Button asChild className="font-bold w-full">
+                  <Link href="/client">戻る</Link>
+                </Button>
+              </div>
+              <div className="w-1/2 flex items-center mx-5">
+                <Button disabled={isLoading} type="submit" className="w-full font-bold">
+                  {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>}
+                  作成
+                </Button>
+              </div>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   )
 }
