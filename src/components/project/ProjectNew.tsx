@@ -17,27 +17,27 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Loader2 } from "lucide-react"
-import { createClient } from "@/actions/client"
+import { createProject } from "@/actions/project"
 import { UserType } from "@/lib/nextauth"
 import toast from "react-hot-toast"
 import Link from "next/link"
 
 // 入力データの検証ルールを定義
 const schema = z.object({
-  person_in_charge: z.string().max(45, { message: "45文字以下で入力する必要があります" }),
-  address: z.string().max(255, { message: "255文字以下で入力する必要があります"}),
+  main_name: z.string().max(45, { message: "255文字以下で入力する必要があります" }),
+  sub_name: z.string().max(255, { message: "255文字以下で入力する必要があります"}),
   note: z.string().max(255, { message: "255文字以下で入力する必要があります"}),
 })
 
 // 入力データの型を定義
 type InputType = z.infer<typeof schema>
 
-interface ClientNewProps {
+interface ProjectNewProps {
   user: UserType
 }
 
-// 新規クライアント
-const ClientNew = ({ user }: ClientNewProps) => {
+// 新規プロジェクト
+const ProjectNew = ({ user }: ProjectNewProps) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -47,8 +47,8 @@ const ClientNew = ({ user }: ClientNewProps) => {
     resolver: zodResolver(schema),
     // 初期値
     defaultValues: {
-      person_in_charge: "",
-      address: "",
+      main_name: "",
+      sub_name: "",
       note: "",
     },
   })
@@ -58,21 +58,21 @@ const ClientNew = ({ user }: ClientNewProps) => {
     setIsLoading(true)
 
     try {
-      // 新規クライアント
-      const res = await createClient({
+      // 新規プロジェクト
+      const res = await createProject({
         accessToken: user.accessToken,
-        person_in_charge: data.person_in_charge,
-        address: data.address,
+        main_name: data.main_name,
+        sub_name: data.sub_name,
         note: data.note,
       })
 
-      if (!res.success || !res.client) {
+      if (!res.success || !res.project) {
         toast.error("作成に失敗しました")
         return
       }
 
       toast.success("作成しました")
-      router.push(`/client`)
+      router.push(`/project`)
       router.refresh()
     } catch (error) {
       toast.error("作成に失敗しました")
@@ -84,17 +84,17 @@ const ClientNew = ({ user }: ClientNewProps) => {
   return (
     <div className="flex justify-center">
       <div className="w-1/2">
-        <div className="text-2xl font-bold text-center mb-5">新規クライアント</div>
+        <div className="text-2xl font-bold text-center mb-5">新規プロジェクト</div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField
               control={form.control}
-              name="person_in_charge"
+              name="main_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>担当者の氏名</FormLabel>
+                  <FormLabel>メイン名</FormLabel>
                   <FormControl>
-                    <Input placeholder="担当者の氏名" {...field} />
+                    <Input placeholder="メイン名" {...field} />
                   </FormControl>
                   <FormMessage/>
                 </FormItem>
@@ -103,12 +103,12 @@ const ClientNew = ({ user }: ClientNewProps) => {
 
             <FormField
               control={form.control}
-              name="address"
+              name="sub_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>住所</FormLabel>
+                  <FormLabel>サブ名</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="住所" {...field} rows={2} />
+                    <Textarea placeholder="サブ名" {...field} rows={2} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -131,7 +131,7 @@ const ClientNew = ({ user }: ClientNewProps) => {
             <div className="flex">
               <div className="w-1/2 flex items-center mx-5">
                 <Button asChild className="font-bold w-full">
-                  <Link href="/client">戻る</Link>
+                  <Link href="/project">戻る</Link>
                 </Button>
               </div>
               <div className="w-1/2 flex items-center mx-5">
@@ -148,4 +148,4 @@ const ClientNew = ({ user }: ClientNewProps) => {
   )
 }
 
-export default ClientNew
+export default ProjectNew

@@ -1,4 +1,10 @@
+import { Client, columns } from "@/components/client/ClientTableColums"
+import { DataTable } from "@/components/client/ClientDataTable"
 import { getClientList } from "@/actions/client"
+
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+
 
 // クライアント一覧ページ
 const ClientList = async () => {
@@ -20,10 +26,16 @@ const ClientList = async () => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-      {/* {clients.map((client) => (
-        <ClientItem key={client.uid} client={client}/>
-      ))} */}
+    <div className="container mx-auto py-10 w-screen-2xl">
+      <div className="text-2xl font-bold text-left mb-5">クライアント一覧</div>
+      <div className="text-right mb-5">
+        <Button asChild className="font-bold">
+          <Link href="/client/new">新規登録</Link>
+        </Button>
+      </div>
+      <div>
+        <DataTable columns={columns} data={clients} />
+      </div>
     </div>
   )
 }
