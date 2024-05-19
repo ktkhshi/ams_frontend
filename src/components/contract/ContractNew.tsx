@@ -39,20 +39,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-
-enum ContractTypeEnum {
-  TimeAndMaterial = 1,  // "準委任契約", 
-  PowerOfAttorney = 2,  // "委任契約", 
-  Work = 3,             // "請負契約", 
-  Dispatched = 4,       // "派遣契約"
-}
-
-const ContractTypeOptions: Array<{ value: ContractTypeEnum, label: string }> = [
-  { value: ContractTypeEnum.TimeAndMaterial,  label: "準委任契約" }, 
-  { value: ContractTypeEnum.PowerOfAttorney,  label: "委任契約" },  
-  { value: ContractTypeEnum.Work,  label: "請負契約" }, 
-  { value: ContractTypeEnum.Dispatched,  label: "派遣契約" }, 
-]
+import { ContractTypeEnum, ContractTypeOptions } from "./ContractType"
 
 // 入力データの検証ルールを定義
 const schema = z.object({

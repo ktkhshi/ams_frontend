@@ -85,6 +85,26 @@ export const getContractList = async () => {
   return { success: true, contracts }
 }
 
+// 契約詳細取得
+export const getContractDetail = async ({ contractId }: { contractId: string }) => {
+  const options: RequestInit = {
+    method: "GET",
+    cache: "no-store",
+  }
+
+  // クライアント詳細取得
+  const result = await fetchAPI(`/api/contract-detail/${contractId}`, options)
+
+  if (!result.success) {
+    console.error(result.error)
+    return { sucess: false,  contract: null }
+  }
+
+  const contract: ContractType = result.data
+
+  return { success: true, contract }
+}
+
 // 新規契約作成
 export const createContract = async ({
   accessToken,

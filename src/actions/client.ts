@@ -68,6 +68,26 @@ export const getClientList = async () => {
   return { success: true, clients }
 }
 
+// クライアント詳細取得
+export const getClientDetail = async ({ clientId }: { clientId: string }) => {
+  const options: RequestInit = {
+    method: "GET",
+    cache: "no-store",
+  }
+
+  // クライアント詳細取得
+  const result = await fetchAPI(`/api/client-detail/${clientId}`, options)
+
+  if (!result.success) {
+    console.error(result.error)
+    return { sucess: false, client: null }
+  }
+
+  const client: ClientType = result.data
+
+  return { success: true, client }
+}
+
 // 新規クライアント
 export const createClient = async ({
   accessToken,

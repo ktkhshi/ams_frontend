@@ -68,6 +68,26 @@ export const getProjectList = async () => {
   return { success: true, projects }
 }
 
+// プロジェクト詳細取得
+export const getProjectDetail = async ({ projectId }: { projectId: string }) => {
+  const options: RequestInit = {
+    method: "GET",
+    cache: "no-store",
+  }
+
+  // プロジェクト詳細取得
+  const result = await fetchAPI(`/api/project-detail/${projectId}`, options)
+
+  if (!result.success) {
+    console.error(result.error)
+    return { sucess: false, project: null }
+  }
+
+  const project: ProjectType = result.data
+
+  return { success: true, project }
+}
+
 // 新規プロジェクト作成
 export const createProject = async ({
   accessToken,
