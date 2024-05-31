@@ -196,7 +196,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
                 control={form.control}
                 name="upper_hours_a_month"
                 render={({ field }) => (
-                  <FormItem　className="ml-5" >
+                  <FormItem className="ml-5">
                     <FormLabel>上限時間</FormLabel>
                     <FormControl>
                       <Input type="number" placeholder="上限時間"　{...field} />

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useRouter } from "next/navigation"
 import { z } from "zod"
 import { useForm, SubmitHandler } from "react-hook-form"
@@ -22,6 +22,8 @@ import toast from "react-hot-toast"
 import Link from "next/link"
 import { Label } from "@radix-ui/react-dropdown-menu"
 
+import { UserContext, ProjectContext, ClientContext, ContractContext } from "@/app/context"
+
 // 入力データの検証ルールを定義
 const schema = z.object({
   user_uid: z.string().length(32),
@@ -38,13 +40,18 @@ const schema = z.object({
 type InputType = z.infer<typeof schema>
 
 interface UserOnProjectNewProps {
-  user: UserType
+  loginuser: UserType
 }
 
 // 新規ユーザプロジェクト
-const UserOnProjectNew = ({ user }: UserOnProjectNewProps) => {
+const UserOnProjectNew = ({ loginuser }: UserOnProjectNewProps) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+
+  const userContext = useContext(UserContext())
+  const projectContext = useContext(ProjectContext())
+  const clientContext = useContext(ClientContext())  
+  const contractContext = useContext(ContractContext())
 
   // フォームの状態
   const form = useForm<InputType>({
@@ -52,10 +59,10 @@ const UserOnProjectNew = ({ user }: UserOnProjectNewProps) => {
     resolver: zodResolver(schema),
     // 初期値
     defaultValues: {
-      user_uid: "",
-      project_uid: "",
-      contract_uid: "",
-      client_uid: "",
+      user_uid: userContext.user.uid,
+      project_uid: projectContext.project.uid,
+      client_uid: clientContext.client.uid,
+      contract_uid: contractContext.contract.uid,
     },
   })
 
@@ -66,7 +73,7 @@ const UserOnProjectNew = ({ user }: UserOnProjectNewProps) => {
     try {
       // 新規ユーザプロジェクト
       const res = await createUserOnProject({
-        accessToken: user.accessToken,
+        accessToken: loginuser.accessToken,
         user_uid: data.user_uid,
         project_uid: data.project_uid,
         contract_uid: data.contract_uid,
@@ -108,15 +115,14 @@ const UserOnProjectNew = ({ user }: UserOnProjectNewProps) => {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="user_name"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="ml-5">
                     <FormLabel>ユーザ名</FormLabel>
                     <FormControl>
-                      <Label {...field} />
+                      <Label>{userContext.user.name}</Label>
                     </FormControl>
                     <FormMessage/>
                   </FormItem>
@@ -143,10 +149,10 @@ const UserOnProjectNew = ({ user }: UserOnProjectNewProps) => {
                 control={form.control}
                 name="project_main_name"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem  className="ml-5">
                     <FormLabel>プロジェクトメイン名</FormLabel>
                     <FormControl>
-                      <Input placeholder="プロジェクトメイン名" {...field} />
+                      <Label>{projectContext.project.main_name}</Label>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -173,10 +179,10 @@ const UserOnProjectNew = ({ user }: UserOnProjectNewProps) => {
                 control={form.control}
                 name="clinet_person_in_charge"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem  className="ml-5">
                     <FormLabel>クライアント担当者名</FormLabel>
                     <FormControl>
-                      <Label {...field} />
+                      <Label>{clientContext.client.person_in_charge}</Label>
                     </FormControl>
                     <FormMessage/>
                   </FormItem>
@@ -203,10 +209,10 @@ const UserOnProjectNew = ({ user }: UserOnProjectNewProps) => {
               control={form.control}
               name="contract_name"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="ml-5">
                   <FormLabel>契約名</FormLabel>
                   <FormControl>
-                    <Label {...field} />
+                    <Label>{contractContext.contract.name}</Label>
                   </FormControl>
                   <FormMessage/>
                 </FormItem>
@@ -217,7 +223,7 @@ const UserOnProjectNew = ({ user }: UserOnProjectNewProps) => {
             <div className="flex">
               <div className="w-1/2 flex items-center mx-5">
                 <Button asChild className="font-bold w-full">
-                  <Link href="/userproject">戻る</Link>
+                  <Link href="/useronproject">戻る</Link>
                 </Button>
               </div>
               <div className="w-1/2 flex items-center mx-5">

@@ -1,3 +1,4 @@
+import React, { useContext, useState } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { getAuthSession } from "@/lib/nextauth";
@@ -5,6 +6,11 @@ import "./globals.css";
 import Navigation from "@/components/auth/Navigation";
 import AuthProvider from "@/components/providers/AuthProvider";
 import ToastProvider from "@/components/providers/ToastProvider";
+import { Compose } from "./combose";
+import { UserProvider } from "@/components/providers/UserProvider"
+import { ProjectProvider } from "@/components/providers/ProjectProvider"
+import { ClientProvider } from "@/components/providers/ClientProvider"
+import { ContractProvider } from "@/components/providers/ContractProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,18 +18,6 @@ export const metadata: Metadata = {
   title: "勤怠管理システム",
   description: "勤怠管理システム（仮）",
 };
-
-// export default function RootLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>) {
-//   return (
-//     <html lang="en">
-//       <body className={inter.className}>{children}</body>
-//     </html>
-//   );
-// }
 
 interface RootLayoutProps {
   children: React.ReactNode
@@ -37,7 +31,6 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   // 認証情報
   const user = await getAuthSession()
 
-
   return (
     <html lang="ja">
       <body className={inter.className}>
@@ -46,9 +39,11 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             <Navigation user={user} />
             <ToastProvider/>
 
-            <main className="container mx-auto max-w-screen-2xl flex-1 px-2">
-              {children}
-            </main>
+            <Compose components={[ UserProvider, ProjectProvider, ClientProvider, ContractProvider ]}>
+              <main className="container mx-auto max-w-screen-2xl flex-1 px-2">
+                {children}
+              </main>
+            </Compose>
 
             {/* フッター */}
             <footer className="py-5">

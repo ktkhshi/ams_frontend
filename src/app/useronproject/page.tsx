@@ -5,13 +5,13 @@ import UserOnProjectNew from "@/components/useronproject/UserOnProjectNew"
 // 新規ユーザプロジェクト（仮）ページ
 const UserOnProjectNewPage = async () => {
   // 認証情報取得
-  const user = await getAuthSession()
+  const loginuser = await getAuthSession()
 
-  if (!user) {
+  if (!loginuser) {
     redirect("/login")
   }
 
-  return <UserOnProjectNew user={user}/>
+  return <UserOnProjectNew loginuser={loginuser}/>
 }
 
 export default UserOnProjectNewPage

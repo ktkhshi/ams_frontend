@@ -16,6 +16,7 @@ export type ContractColumnType = {
 }
 
 export const columns: ColumnDef<ContractColumnType>[] = [
+
   {
     accessorKey: "unit_price",
     header: "単価",
