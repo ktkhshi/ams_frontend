@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { getAuthSession } from "@/lib/nextauth";
@@ -6,11 +6,11 @@ import "./globals.css";
 import Navigation from "@/components/auth/Navigation";
 import AuthProvider from "@/components/providers/AuthProvider";
 import ToastProvider from "@/components/providers/ToastProvider";
-import { Compose } from "./combose";
-import { UserProvider } from "@/components/providers/UserProvider"
-import { ProjectProvider } from "@/components/providers/ProjectProvider"
-import { ClientProvider } from "@/components/providers/ClientProvider"
-import { ContractProvider } from "@/components/providers/ContractProvider";
+import { Compose } from "../app/compose";
+import { UserContextProvider } from "@/components/providers/UserProvider";
+import { ProjectContextProvider } from "@/components/providers/ProjectProvider";
+import { ClientContextProvider } from "@/components/providers/ClientProvider";
+import { ContractContextProvider } from "@/components/providers/ContractProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +30,9 @@ interface RootLayoutProps {
 const RootLayout = async ({ children }: RootLayoutProps) => {
   // 認証情報
   const user = await getAuthSession()
+  const userInfo = ({uid: "testtest", name: "太郎"})
+  // const projectContext = useProjectContext()
+  const clientInfo = ({uid: "ccclient", person_in_charge: "タナカ"})
 
   return (
     <html lang="ja">
@@ -38,13 +41,11 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
           <div className="flex min-h-screen flex-col">
             <Navigation user={user} />
             <ToastProvider/>
-
-            <Compose components={[ UserProvider, ProjectProvider, ClientProvider, ContractProvider ]}>
-              <main className="container mx-auto max-w-screen-2xl flex-1 px-2">
-                {children}
-              </main>
-            </Compose>
-
+              <Compose components={[ UserContextProvider, ProjectContextProvider, ClientContextProvider, ContractContextProvider ]}>
+                <main className="container mx-auto max-w-screen-2xl flex-1 px-2">
+                  {children}
+                </main>
+              </Compose>
             {/* フッター */}
             <footer className="py-5">
               <div className="text-center text-sm">

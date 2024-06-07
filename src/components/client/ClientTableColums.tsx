@@ -3,8 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
-import { ClientContext, ClientInfo } from "@/app/context"
-import { useContext, useState } from "react"
+import { useClientContext } from "@/components/contexts/ClientContext"
 import { ClipboardCheck } from "lucide-react"
 import toast from "react-hot-toast"
 
@@ -22,14 +21,15 @@ export const columns: ColumnDef<Client>[] = [
     id: "select",
     cell: ({ row }) => {
       const org_project = row.original
-      const context = useContext(ClientContext())
-      const [ client, setClient ] = useState(context)
+
+      const { client, setClient } = useClientContext();
 
       const updateContext = () => { 
-        client.client.uid = org_project.uid
-        client.client.person_in_charge = org_project.person_in_charge 
+        client.uid = org_project.uid
+        client.person_in_charge = org_project.person_in_charge
         setClient(client)
-        toast.success(client.client.uid)
+
+        toast.success("コピーしました")
       }
 
       return (

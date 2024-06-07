@@ -3,8 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
-import { ProjectContext } from "@/app/context"
-import { useContext, useState } from "react"
+import { useProjectContext } from "@/components/contexts/ProjectContext"
 import { ClipboardCheck } from "lucide-react"
 import toast from "react-hot-toast"
 
@@ -22,15 +21,15 @@ export const columns: ColumnDef<Project>[] = [
     id: "select",
     cell: ({ row }) => {
       const org_project = row.original
-      const context = useContext(ProjectContext())
-      const [ project, setProject ] = useState(context)
+
+      const { project, setProject } = useProjectContext();
       
       const updateContext = () => { 
-        // context.setProject({ uid: org_project.uid, main_name: org_project.main_name })
-        project.project.uid = org_project.uid
-        project.project.main_name = org_project.main_name
+        project.uid = org_project.uid
+        project.main_name = org_project.main_name
         setProject(project)
-        toast.success(project.project.uid)
+
+        toast.success("コピーしました")
       }
 
       return (
