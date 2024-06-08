@@ -29,14 +29,14 @@ import {  useContractContext } from "@/components/contexts/ContractContext"
 
 // 入力データの検証ルールを定義
 const schema = z.object({
-  user_uid: z.string().length(32),
-  user_name: z.string(),
-  project_uid: z.string().length(32),
-  project_main_name: z.string(),
-  contract_uid: z.string().length(32),
-  contract_name: z.string(),
-  client_uid: z.string().length(32),
-  clinet_person_in_charge: z.string(),
+  user_uid: z.string().max(32),
+  user_name: z.string().optional(),
+  project_uid: z.string().length(36),
+  project_main_name: z.string().optional(),
+  contract_uid: z.string().length(36),
+  contract_name: z.string().optional(),
+  client_uid: z.string().length(36),
+  person_in_charge: z.string().optional(),
 })
 
 // 入力データの型を定義
@@ -121,6 +121,7 @@ const UserOnProjectNew = async ({ loginuser }: UserOnProjectNewProps) => {
               <FormField
                 control={form.control}
                 name="user_name"
+                disabled={true}
                 render={({ field }) => (
                   <FormItem className="ml-5">
                     <FormLabel>ユーザ名</FormLabel>
@@ -151,6 +152,7 @@ const UserOnProjectNew = async ({ loginuser }: UserOnProjectNewProps) => {
               <FormField
                 control={form.control}
                 name="project_main_name"
+                disabled={true}
                 render={({ field }) => (
                   <FormItem  className="ml-5">
                     <FormLabel>プロジェクトメイン名</FormLabel>
@@ -180,7 +182,8 @@ const UserOnProjectNew = async ({ loginuser }: UserOnProjectNewProps) => {
 
               <FormField
                 control={form.control}
-                name="clinet_person_in_charge"
+                name="person_in_charge"
+                disabled={true}
                 render={({ field }) => (
                   <FormItem  className="ml-5">
                     <FormLabel>クライアント担当者名</FormLabel>
@@ -208,19 +211,20 @@ const UserOnProjectNew = async ({ loginuser }: UserOnProjectNewProps) => {
                 )}
               />
 
-            <FormField
-              control={form.control}
-              name="contract_name"
-              render={({ field }) => (
-                <FormItem className="ml-5">
-                  <FormLabel>契約名</FormLabel>
-                  <FormControl>
-                    <Label>{contract.name}</Label>
-                  </FormControl>
-                  <FormMessage/>
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="contract_name"
+                disabled={true}
+                render={({ field }) => (
+                  <FormItem className="ml-5">
+                    <FormLabel>契約名</FormLabel>
+                    <FormControl>
+                      <Label>{contract.name}</Label>
+                    </FormControl>
+                    <FormMessage/>
+                  </FormItem>
+                )}
+              />
             </div>
 
             <div className="flex">

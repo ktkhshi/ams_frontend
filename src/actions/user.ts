@@ -290,3 +290,31 @@ export const updatePassword = async ({
   return { success: true }
 }
 // #endregion パスワード変更
+
+// #region ユーザ一覧取得
+export interface UserType {
+  uid: string
+  name: string
+  created_at: string
+}
+
+
+export const getUserList = async () => {
+  const options: RequestInit = {
+    method: "GET",
+    cache: "no-store",
+  }
+
+  // ユーザ一覧取得
+  const result = await fetchAPI("/api/user-list/", options)
+
+  if (!result.success) {
+    console.error(result.error)
+    return { success: false, users: [] }
+  }
+
+  const users: UserType[] = result.data
+
+  return { success: true, users }
+}
+// #endregion ユーザ一覧取得

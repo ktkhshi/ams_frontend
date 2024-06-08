@@ -1,4 +1,4 @@
-import { ContractColumnType, columns } from "@/components/contract/ContractTableColums"
+import { ContractColumnType, columns } from "@/components/contract/ContractTableColumns"
 import { DataTable } from "@/components/contract/ContractDataTable"
 import { getContractList } from "@/actions/contract"
 import { GetContractTypeText } from "./ContractType"

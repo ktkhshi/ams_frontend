@@ -2,6 +2,7 @@
 
 import { UserType } from "@/lib/nextauth"
 import { ProjectType } from "./project"
+import { ClientType } from "./client"
 import { ContractType } from "./contract"
 
 // 共通のAPIリクエスト
@@ -38,7 +39,7 @@ export interface UserOnProjectType {
   uid: string
   user: UserType
   project: ProjectType
-  client: ClientTypes
+  client: ClientType
   contract: ContractType
   updated_at: string
   created_at: string
@@ -96,6 +97,7 @@ export const createUserOnProject = async ({
     body,
   }
 
+  console.log(options)
   // 新規ユーザプロジェクトを送信
   const result = await fetchAPI("/api/useronprject/", options)
 

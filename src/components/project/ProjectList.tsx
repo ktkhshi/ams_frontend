@@ -1,4 +1,4 @@
-import { Project, columns } from "@/components/project/ProjectTableColums"
+import { columns } from "@/components/project/ProjectTableColumns"
 import { DataTable } from "@/components/project/ProjectDataTable"
 import { getProjectList } from "@/actions/project"
 

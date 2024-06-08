@@ -1,4 +1,4 @@
-import { Client, columns } from "@/components/client/ClientTableColums"
+import { columns } from "@/components/client/ClientTableColumns"
 import { DataTable } from "@/components/client/ClientDataTable"
 import { getClientList } from "@/actions/client"
 
