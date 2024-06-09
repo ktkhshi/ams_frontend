@@ -3,7 +3,7 @@
 import React, { createContext, useContext } from "react"
 
 export type UserInfo = {
-  uid: string,
+  id: string,
   name: string,
 }
 
@@ -14,7 +14,7 @@ export type UserContextType = {
 }
 
 
-export const initialUserContext: UserInfo = { uid: "", name: "" };
+export const initialUserContext: UserInfo = { id: "", name: "" };
 
 export const UserContext = createContext<UserContextType>({ user: initialUserContext, setUser: () => {}, initUser: () => {} })
 

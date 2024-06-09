@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { z } from "zod"
+import { number, z } from "zod"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -29,7 +29,7 @@ import {  useContractContext } from "@/components/contexts/ContractContext"
 
 // 入力データの検証ルールを定義
 const schema = z.object({
-  user_uid: z.string().max(32),
+  user_id: z.number(),
   user_name: z.string().optional(),
   project_uid: z.string().length(36),
   project_main_name: z.string().optional(),
@@ -51,10 +51,10 @@ const UserOnProjectNew = async ({ loginuser }: UserOnProjectNewProps) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
-  const { user } = useUserContext()
-  const { project } = useProjectContext()
-  const { client } = useClientContext()
-  const { contract } = useContractContext()
+  const { user, initUser } = useUserContext()
+  const { project, initProject } = useProjectContext()
+  const { client, initClient } = useClientContext()
+  const { contract, initContract } = useContractContext()
 
   // フォームの状態
   const form = useForm<InputType>({
@@ -62,7 +62,7 @@ const UserOnProjectNew = async ({ loginuser }: UserOnProjectNewProps) => {
     resolver: zodResolver(schema),
     // 初期値
     defaultValues: {
-      user_uid: user.uid,
+      user_id: Number(user.id),
       project_uid: project.uid,
       client_uid: client.uid,
       contract_uid: contract.uid,
@@ -77,7 +77,7 @@ const UserOnProjectNew = async ({ loginuser }: UserOnProjectNewProps) => {
       // 新規ユーザプロジェクト
       const res = await createUserOnProject({
         accessToken: loginuser.accessToken,
-        user_uid: data.user_uid,
+        user_id: data.user_id,
         project_uid: data.project_uid,
         contract_uid: data.contract_uid,
         client_uid: data.client_uid,
@@ -89,7 +89,11 @@ const UserOnProjectNew = async ({ loginuser }: UserOnProjectNewProps) => {
       }
 
       toast.success("作成しました")
-      router.push(`/client`)    // todo 遷移先
+      initUser()
+      initProject()
+      initClient()
+      initContract()
+      router.push(`/useronproject`)    // todo 遷移先
       router.refresh()
     } catch (error) {
       toast.error("作成に失敗しました")
@@ -107,7 +111,7 @@ const UserOnProjectNew = async ({ loginuser }: UserOnProjectNewProps) => {
             <div className="flex justify-start">
               <FormField
                 control={form.control}
-                name="user_uid"
+                name="user_id"
                 render={({ field }) => (
                   <FormItem className="w-1/3">
                     <FormLabel>ユーザID</FormLabel>

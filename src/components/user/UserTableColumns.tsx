@@ -10,7 +10,7 @@ import toast from "react-hot-toast"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type User = {
-  uid: string
+  id: string
   name: string
   created_at: string
 }
@@ -24,7 +24,7 @@ export const columns: ColumnDef<User>[] = [
       const { user, setUser } = useUserContext();
       
       const updateContext = () => { 
-        user.uid = org_project.uid
+        user.id = org_project.id
         user.name = org_project.name
         setUser(user)
 
@@ -44,7 +44,7 @@ export const columns: ColumnDef<User>[] = [
     size: 1,
   },
   {
-    accessorKey: "uid",
+    accessorKey: "id",
     header: "キー",
     size: 1,
   },

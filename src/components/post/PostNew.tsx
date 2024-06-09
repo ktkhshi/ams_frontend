@@ -65,7 +65,6 @@ const PostNew = ({ user }: PostNewProps) => {
     try {
       // 新規投稿
       const res = await createPost({
-
         accessToken: user.accessToken,
         title: data.title,
         content: data.content,

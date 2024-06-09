@@ -19,7 +19,7 @@ export const UserContextProvider = (props: { children: ReactNode } ) => {
 
   const initData = () => {
     localStorage.removeItem(storageDataKeyName)
-    setUser({ uid: "", name: "" })
+    setUser({ id: "", name: "" })
   }
 
   const storeData = (user: UserInfo) => {

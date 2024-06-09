@@ -334,7 +334,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
               name="contract_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>サブ名</FormLabel>
+                  <FormLabel>契約名</FormLabel>
                   <FormControl>
                     <Input placeholder="契約名" {...field} />
                   </FormControl>

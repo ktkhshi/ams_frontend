@@ -293,7 +293,7 @@ export const updatePassword = async ({
 
 // #region ユーザ一覧取得
 export interface UserType {
-  uid: string
+  id: string
   name: string
   created_at: string
 }
