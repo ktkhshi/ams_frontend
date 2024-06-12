@@ -17,7 +17,7 @@ export const initialClientContext: ClientInfo = { uid: "", person_in_charge: "" 
 
 export const ClientContext = createContext<ClientContextType>({ client: initialClientContext, setClient: () => {}, initClient: () => {} })
 
-export const useClientContext = () => {
+export const UseClientContext = () => {
   const { client, setClient, initClient } = useContext(ClientContext);
   return { client, setClient, initClient }
 }

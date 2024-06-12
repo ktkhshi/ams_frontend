@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
-import { useUserContext } from "@/components/contexts/UserContext"
+import { UseUserContext } from "@/components/contexts/UserContext"
 import { ClipboardCheck } from "lucide-react"
 import toast from "react-hot-toast"
 
@@ -21,7 +21,7 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const org_project = row.original
 
-      const { user, setUser } = useUserContext();
+      const { user, setUser } = UseUserContext();
       
       const updateContext = () => { 
         user.id = org_project.id

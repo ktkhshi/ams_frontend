@@ -11,6 +11,7 @@ import { UserContextProvider } from "@/components/providers/UserProvider";
 import { ProjectContextProvider } from "@/components/providers/ProjectProvider";
 import { ClientContextProvider } from "@/components/providers/ClientProvider";
 import { ContractContextProvider } from "@/components/providers/ContractProvider";
+import Sidebar from "@/components/ui/sidebar"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,9 +43,16 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             <Navigation user={user} />
             <ToastProvider/>
               <Compose components={[ UserContextProvider, ProjectContextProvider, ClientContextProvider, ContractContextProvider ]}>
-                <main className="container mx-auto max-w-screen-2xl flex-1 px-2">
-                  {children}
-                </main>
+              <main className="container mx-auto max-w-screen-2xl flex-1 px-2">
+                <div className="flex">
+                  <div>
+                    <Sidebar />
+                  </div>
+                  <div className="h-full w-full">
+                    {children}
+                  </div>
+                </div>
+              </main>
               </Compose>
             {/* フッター */}
             <footer className="py-5">

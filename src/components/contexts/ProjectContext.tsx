@@ -17,7 +17,7 @@ export const initialProjectContext: ProjectInfo = { uid: "", main_name: "" }
 
 export const ProjectContext = createContext<ProjectContextType>({ project: initialProjectContext, setProject: () => {}, initProject: () => {} })
 
-export const useProjectContext = () => {
+export const UseProjectContext = () => {
   const { project, setProject, initProject } = useContext(ProjectContext);
   return { project, setProject, initProject }
 }

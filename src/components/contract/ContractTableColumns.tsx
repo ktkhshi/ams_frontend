@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
-import { useContractContext } from "@/components/contexts/ContractContext"
+import { UseContractContext } from "@/components/contexts/ContractContext"
 import { ClipboardCheck } from "lucide-react"
 import toast from "react-hot-toast"
 
@@ -27,7 +27,7 @@ export const columns: ColumnDef<ContractColumnType>[] = [
     cell: ({ row }) => {
       const org_contract = row.original
 
-      const { contract, setContract } = useContractContext();
+      const { contract, setContract } = UseContractContext();
       
       const updateContext = () => { 
         contract.uid = org_contract.uid

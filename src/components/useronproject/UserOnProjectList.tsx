@@ -25,7 +25,7 @@ const UserOnProjectList = async () => {
   }
 
   return (
-    <div className="container mx-auto py-10 w-screen-2xl">
+    <div className="container mx-auto py-10 w-full">
       <div className="text-2xl font-bold text-left mb-5">ユーザプロジェクト一覧</div>
       <div className="text-right mb-5">
         <Button asChild className="font-bold">

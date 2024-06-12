@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
-import { useProjectContext } from "@/components/contexts/ProjectContext"
+import { UseProjectContext } from "@/components/contexts/ProjectContext"
 import { ClipboardCheck } from "lucide-react"
 import toast from "react-hot-toast"
 
@@ -22,7 +22,7 @@ export const columns: ColumnDef<Project>[] = [
     cell: ({ row }) => {
       const org_project = row.original
 
-      const { project, setProject } = useProjectContext();
+      const { project, setProject } = UseProjectContext();
       
       const updateContext = () => { 
         project.uid = org_project.uid

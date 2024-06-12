@@ -17,7 +17,7 @@ export const initialContractContext: ContractInfo = { uid: "", name: "" };
 
 export const ContractContext = createContext<ContractContextType>({ contract: initialContractContext, setContract: () => {}, initContract: () => {} })
 
-export const useContractContext = () => {
+export const UseContractContext = () => {
   const { contract, setContract, initContract } = useContext(ContractContext);
   return { contract, setContract, initContract }
 }

@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
-import { useClientContext } from "@/components/contexts/ClientContext"
+import { UseClientContext } from "@/components/contexts/ClientContext"
 import { ClipboardCheck } from "lucide-react"
 import toast from "react-hot-toast"
 
@@ -22,7 +22,7 @@ export const columns: ColumnDef<Client>[] = [
     cell: ({ row }) => {
       const org_project = row.original
 
-      const { client, setClient } = useClientContext();
+      const { client, setClient } = UseClientContext();
 
       const updateContext = () => { 
         client.uid = org_project.uid

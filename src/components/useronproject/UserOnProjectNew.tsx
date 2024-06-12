@@ -22,10 +22,10 @@ import toast from "react-hot-toast"
 import Link from "next/link"
 import { Label } from "@radix-ui/react-dropdown-menu"
 
-import {  useUserContext } from "@/components/contexts/UserContext"
-import {  useProjectContext } from "@/components/contexts/ProjectContext"
-import {  useClientContext } from "@/components/contexts/ClientContext"
-import {  useContractContext } from "@/components/contexts/ContractContext"
+import { UseUserContext } from "@/components/contexts/UserContext"
+import { UseProjectContext } from "@/components/contexts/ProjectContext"
+import { UseClientContext } from "@/components/contexts/ClientContext"
+import { UseContractContext } from "@/components/contexts/ContractContext"
 
 // 入力データの検証ルールを定義
 const schema = z.object({
@@ -51,10 +51,10 @@ const UserOnProjectNew = async ({ loginuser }: UserOnProjectNewProps) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
-  const { user, initUser } = useUserContext()
-  const { project, initProject } = useProjectContext()
-  const { client, initClient } = useClientContext()
-  const { contract, initContract } = useContractContext()
+  const { user, initUser } = UseUserContext()
+  const { project, initProject } = UseProjectContext()
+  const { client, initClient } = UseClientContext()
+  const { contract, initContract } = UseContractContext()
 
   // フォームの状態
   const form = useForm<InputType>({

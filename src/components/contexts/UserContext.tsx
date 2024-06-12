@@ -18,7 +18,7 @@ export const initialUserContext: UserInfo = { id: "", name: "" };
 
 export const UserContext = createContext<UserContextType>({ user: initialUserContext, setUser: () => {}, initUser: () => {} })
 
-export const useUserContext = () => {
+export const UseUserContext = () => {
   const { user, setUser, initUser } = useContext(UserContext);
   return { user, setUser, initUser }
 }
