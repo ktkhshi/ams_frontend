@@ -118,7 +118,6 @@ export const createUserOnProject = async ({
     body,
   }
 
-  console.log(options)
   // 新規ユーザプロジェクトを送信
   const result = await fetchAPI("/api/useronprojects/", options)
 

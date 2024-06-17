@@ -22,7 +22,15 @@ const ContractList = async () => {
 
   if (contracts.length == 0) {
     return (
-      <div className="text-center text-sm text-gray-500">契約データがありません</div>
+      <div className="container mx-auto py-10 w-screen-2xl">
+        <div className="text-2xl font-bold text-left mb-5">契約一覧</div>
+        <div className="text-right mb-5">
+          <Button asChild className="font-bold">
+            <Link href="/contract/new">新規登録</Link>
+          </Button>
+        </div>
+        <div className="text-center text-sm text-gray-500">契約データがありません</div>
+      </div>
     )
   }
 

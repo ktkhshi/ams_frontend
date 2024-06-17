@@ -24,6 +24,7 @@ import {
   BriefcaseBusiness,
   Building2,
   Handshake,
+  Rocket,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 
@@ -88,6 +89,11 @@ export default function Sidebar() {
           link: "/contract",
           icon: <Handshake/>,
           text: "契約"
+        },
+        {
+          link: "/useronproject",
+          icon: <Rocket />,
+          text: "ユーザプロジェクト"
         },
       ]
     },
