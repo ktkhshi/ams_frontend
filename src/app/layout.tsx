@@ -12,6 +12,7 @@ import { ProjectContextProvider } from "@/components/providers/ProjectProvider";
 import { ClientContextProvider } from "@/components/providers/ClientProvider";
 import { ContractContextProvider } from "@/components/providers/ContractProvider";
 import Sidebar from "@/components/ui/sidebar"
+import Login from "@/components/auth/Login";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,9 +32,6 @@ interface RootLayoutProps {
 const RootLayout = async ({ children }: RootLayoutProps) => {
   // 認証情報
   const user = await getAuthSession()
-  const userInfo = ({uid: "testtest", name: "太郎"})
-  // const projectContext = useProjectContext()
-  const clientInfo = ({uid: "ccclient", person_in_charge: "タナカ"})
 
   return (
     <html lang="ja">
@@ -46,7 +44,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
               <main className="container mx-auto max-w-screen-2xl flex-1 px-2">
                 <div className="flex">
                   <div>
-                    <Sidebar />
+                    {(user != null) && <Sidebar user={user}/>}
                   </div>
                   <div className="h-full w-full">
                     {children}

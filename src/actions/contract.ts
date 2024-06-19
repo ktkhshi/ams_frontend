@@ -59,6 +59,7 @@ export interface CreateContractType {
   latest_work_started_at: Date
   earliest_work_ended_at: Date
   work_hours_a_day: number
+  rest_hours_a_day: number
   started_on: Date
   ended_on: Date | undefined
   contract_name: string
@@ -115,6 +116,7 @@ export const createContract = async ({
   latest_work_started_at,
   earliest_work_ended_at,
   work_hours_a_day,
+  rest_hours_a_day,
   started_on,
   ended_on,
   contract_name,
@@ -128,6 +130,7 @@ export const createContract = async ({
     latest_work_started_at: format(latest_work_started_at, "HH:mm"),
     earliest_work_ended_at: format(earliest_work_ended_at, "HH:mm"),
     work_hours_a_day: work_hours_a_day,
+    rest_hours_a_day: rest_hours_a_day,
     started_on: format(started_on, "yyyy-MM-dd"),
     ended_on: ended_on ? format(ended_on as Date, "yyyy-MM-dd") : undefined,
     contract_name: contract_name,

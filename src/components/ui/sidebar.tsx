@@ -28,7 +28,13 @@ import {
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 
-export default function Sidebar() {
+import { UserType } from "@/lib/nextauth"
+
+interface SidebarProps {
+  user: UserType
+}
+
+export default function Sidebar({ user }: SidebarProps) {
   const router = useRouter()
   
   const menuList = [
@@ -41,7 +47,7 @@ export default function Sidebar() {
           text: "先月"
         },
         {
-          link: "/",
+          link: `/useronprojectmonth/${user.uid}/75b5e4789e0046b5b050aa2c7efd6855/202406/`,
           icon: <CalendarCheck/>,
           text: "今月"
         },
@@ -102,7 +108,7 @@ export default function Sidebar() {
   return (
   <div className="flex flex-col gap-2 ml-4 min-w-40 border-r-2 min-h-screen">
     <div>
-      <SidebarUserItem />
+      <SidebarUserItem user={user}/>
     </div>    
     <div className="grow">
       <Command style={{ overflow: 'visible' }}>

@@ -43,19 +43,23 @@ import { ContractTypeEnum, ContractTypeOptions } from "./ContractType"
 
 // 入力データの検証ルールを定義
 const schema = z.object({
-  unit_price: z.coerce.number().positive( { message: "正の値で入力必要があります" } ),
+  unit_price: z.coerce.number().positive({ message: "正の値で入力必要があります" } ),
   contract_type: z.nativeEnum(ContractTypeEnum),
-  lower_hours_a_month: z.number().positive( { message: "正の値で入力必要があります" } )
+  lower_hours_a_month: z.coerce.number().positive({ message: "正の値で入力必要があります" } )
                                  .lte(744, { message: "744以下の値にする必要があります"}),
-  upper_hours_a_month: z.number().positive( { message: "正の値で入力必要があります" } )
+  upper_hours_a_month: z.coerce.number().positive({ message: "正の値で入力必要があります" } )
                                  .lte(744, { message: "744以下の値にする必要があります"}),
-  latest_work_started_at: z.date({　required_error: "規定の開始時刻を入力する必要があります" }),
+  latest_work_started_at: z.date({ required_error: "規定の開始時刻を入力する必要があります" }),
   earliest_work_ended_at: z.date({ required_error: "規定の終了時刻を入力する必要があります" }),
-  work_hours_a_day: z.number().positive( { message: "正の値で入力必要があります" } )
-                              .lte(24, { message: "24以下の値にする必要があります"}),
-  started_on: z.date({　required_error: "契約開始日を入力する必要があります" }),
+  work_hours_a_day: z.coerce.number().positive({ message: "正の値で入力必要があります" } )
+                                      .lte(24, { message: "24以下の値にする必要があります"}),
+  rest_hours_a_day: z.coerce.number().positive({ message: "正の値で入力必要があります" } )
+                                      .lte(24, { message: "24以下の値にする必要があります"}),
+  started_on: z.date({ required_error: "契約開始日を入力する必要があります" }),
   ended_on: z.date().optional(),
-  contract_name: z.string().max(255, { message: "255文字以下で入力する必要があります"}),
+  contract_name: z.string().min(1, { message: "必須項目です" })
+                          .max(255, { message: "255文字以下で入力する必要があります"}),
+                            
   note: z.string().max(255, { message: "255文字以下で入力する必要があります"}),
 })
 
@@ -84,6 +88,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
       latest_work_started_at: new Date(2020, 1, 1, 9, 0, 0),
       earliest_work_ended_at: new Date(2020, 1, 1, 18, 0, 0),
       work_hours_a_day: 8,
+      rest_hours_a_day: 1,
       started_on: new Date(),
       ended_on: undefined,
       contract_name: "",
@@ -106,6 +111,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
         latest_work_started_at: data.latest_work_started_at,
         earliest_work_ended_at: data.earliest_work_ended_at,
         work_hours_a_day: data.work_hours_a_day,
+        rest_hours_a_day: data.rest_hours_a_day,
         started_on: data.started_on,
         ended_on: data.ended_on,
         contract_name: data.contract_name,
@@ -253,6 +259,19 @@ const ContractNew = ({ user }: ContractNewProps) => {
                   <FormLabel>所定勤務時間</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="所定勤務時間" {...field} />
+                  </FormControl>
+                  <FormMessage/>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="rest_hours_a_day"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>所定休憩時間</FormLabel>
+                  <FormControl>
+                    <Input type="number" placeholder="所定休憩時間" {...field} />
                   </FormControl>
                   <FormMessage/>
                 </FormItem>

@@ -46,6 +46,25 @@ export interface ReadUserOnProjectType {
   created_at: string
 }
 
+interface UserOnProjectIndexType {
+  uid: string
+  date_year_month: string
+  user_on_project: string
+  user_on_project_month: string
+  updated_at: string
+  created_at: string
+}
+
+export interface ReadMyUserOnProjectType {
+  uid: string
+  project: ProjectType
+  contract: ContractType
+  client: ClientType
+  indexes: UserOnProjectIndexType
+  updated_at: string
+  created_at: string
+}
+
 export interface CreateUserOnProjectType {
   accessToken: string
   user_id: number
@@ -92,6 +111,30 @@ export const getUserOnProjectList = async () => {
   const useronprojects: ReadUserOnProjectType[] = array
 
   return { success: true, useronprojects }
+}
+
+interface GetMyUserOnProjectListProps {
+  userUid: string
+  date_ym: string
+}
+
+export const getMyUserOnProjectList = async ({ userUid, date_ym }: GetMyUserOnProjectListProps) => {
+  const options: RequestInit = {
+    method: "GET",
+    cache: "no-store",
+  }
+
+  // ユーザプロジェクト一覧取得
+  const result = await fetchAPI(`/api/useronprojectmonth/${userUid}/${date_ym}`, options)
+
+  if (!result.success) {
+    console.error(result.error)
+    return { sucess: false, uop: null }
+  }
+
+  const month: ReadMyUserOnProjectType = result.data
+
+  return { success: true, month }
 }
 
 // 新規ユーザプロジェクト
