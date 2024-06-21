@@ -42,19 +42,9 @@ export default function Sidebar({ user }: SidebarProps) {
       group: "User Menu",
       items: [
         {
-          link: "/",
-          icon: <ArrowLeft/>,
-          text: "先月"
-        },
-        {
-          link: `/useronprojectmonth/${user.uid}/75b5e4789e0046b5b050aa2c7efd6855/202406/`,
+          link: `/useronprojectmonth/${user.uid}/202406/`,
           icon: <CalendarCheck/>,
-          text: "今月"
-        },
-        {
-          link: "/",
-          icon: <ArrowRight/>,
-          text: "来月"
+          text: "勤務プロジェクト選択"
         },
       ]
     },

@@ -55,19 +55,19 @@ export interface UserOnProjectMonthType {
 
 interface GetUserOnProjectMonthDetailProps {
   userUid: string
-  projectId: string
   date_ym: string
+  projectUid: string
 }
 
 // ユーザプロジェクト勤務月詳細取得
-export const getUserOnProjectMonthDetail = async ({ userUid, projectId, date_ym }: GetUserOnProjectMonthDetailProps) => {
+export const getUserOnProjectMonthDetail = async ({ userUid, date_ym, projectUid }: GetUserOnProjectMonthDetailProps) => {
   const options: RequestInit = {
     method: "GET",
     cache: "no-store",
   }
 
   // ユーザプロジェクト勤務月詳細取得
-  const result = await fetchAPI(`/api/useronprojectmonth/${userUid}/${projectId}/${date_ym}`, options)
+  const result = await fetchAPI(`/api/useronprojectmonth/${userUid}/${date_ym}/${projectUid}`, options)
 
   if (!result.success) {
     console.error(result.error)

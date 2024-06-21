@@ -4,15 +4,15 @@ import UserOnProjectMonthDetail from "@/components/useronprojectmonth/UserOnProj
 interface UserOnProjectMonthProps {
   params: {
     userUid: string
-    projectId: string
     date_ym: string
+    projectUid: string
   }
 }
 
 // ユーザプロジェクト勤務月詳細ージ
 export default async function UserOnProjectMonthPage({ params }: UserOnProjectMonthProps ) {
-  const { userUid, projectId, date_ym } = params
-  const { success, month } = await getUserOnProjectMonthDetail({ userUid, projectId, date_ym })
+  const { userUid, date_ym, projectUid } = params
+  const { success, month } = await getUserOnProjectMonthDetail({ userUid, date_ym, projectUid })
   
   if (!success) {
     return (

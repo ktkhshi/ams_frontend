@@ -46,7 +46,7 @@ export interface ReadUserOnProjectType {
   created_at: string
 }
 
-interface UserOnProjectIndexType {
+export interface UserOnProjectIndexType {
   uid: string
   date_year_month: string
   user_on_project: string
@@ -125,16 +125,16 @@ export const getMyUserOnProjectList = async ({ userUid, date_ym }: GetMyUserOnPr
   }
 
   // ユーザプロジェクト一覧取得
-  const result = await fetchAPI(`/api/useronprojectmonth/${userUid}/${date_ym}`, options)
+  const result = await fetchAPI(`/api/useronproject-list/${userUid}/${date_ym}`, options)
 
   if (!result.success) {
     console.error(result.error)
     return { sucess: false, uop: null }
   }
 
-  const month: ReadMyUserOnProjectType = result.data
+  const uoplist: ReadMyUserOnProjectType[] = result.data
 
-  return { success: true, month }
+  return { success: true, uoplist }
 }
 
 // 新規ユーザプロジェクト

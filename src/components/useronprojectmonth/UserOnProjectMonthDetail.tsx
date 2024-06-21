@@ -1,3 +1,4 @@
+"use client"
 
 import { UserOnProjectMonthType } from "@/actions/useronprojectmonth"
 import {
@@ -10,9 +11,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { 
+  ArrowLeft,
+  ArrowRight,
+  CalendarCheck,
+} from "lucide-react"
 import { cn } from "@/lib/utils"
 import { formatDate } from "date-fns"
 import { ja } from 'date-fns/locale'
+import { Button } from "../ui/button"
+import { useRouter } from "next/navigation"
 
 interface UserOnProjectMonthDetailProps {
   month: UserOnProjectMonthType
@@ -20,14 +28,40 @@ interface UserOnProjectMonthDetailProps {
 
 // 投稿詳細
 const UserOnProjectMonthDetail = async ({ month }: UserOnProjectMonthDetailProps) => {
+  const router = useRouter()
   let totalWorkHours: number = 0
   const thisMonth = new Date(month.days[0].date_day)
+
+  const handlePreviousMonth = () => {
+    router.push(`/`)
+  }
+
+  const handleThisMonth = () => {
+    router.push(`/`)
+  }
+
+  const handleNextMonth = () => {
+    router.push(`/`)
+  }
 
   // 月を取得した時に1月が0から始まるため＋1する
   return (
     <div className="container mx-auto py-10 w-full">
-    <div className="text-2xl font-bold text-left mb-5">プロジェクト勤務表</div>
-    <div className="text-xl font-bold">{thisMonth.getFullYear() + "年" + (thisMonth.getMonth() + 1) + "月"}</div>
+    <div className="flex justify-between">
+      <div className="text-2xl font-bold text-left mb-5">プロジェクト勤務表</div>
+      <div className="flex justify-normal m-2">
+        <Button className="m-2" onSelect={handlePreviousMonth}>
+          <ArrowLeft className="mr-2 h-4 w-4" /> 先月
+        </Button>
+        <Button className="m-2" onSelect={handleThisMonth}>
+          <CalendarCheck className="mr-2 h-4 w-4" /> 今月
+        </Button>
+        <Button className="m-2" onSelect={handleNextMonth}>
+          <ArrowRight className="mr-2 h-4 w-4" /> 来月
+        </Button>
+      </div>
+    </div>
+    <div className="text-2xl font-bold">{thisMonth.getFullYear() + "年" + (thisMonth.getMonth() + 1) + "月"}</div>
     <div className="w-full">
       <Table className="table-auto">
         <TableHeader>
