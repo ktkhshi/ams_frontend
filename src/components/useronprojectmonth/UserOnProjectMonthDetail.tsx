@@ -21,12 +21,13 @@ import { formatDate } from "date-fns"
 import { ja } from 'date-fns/locale'
 import { Button } from "../ui/button"
 import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 interface UserOnProjectMonthDetailProps {
   month: UserOnProjectMonthType
 }
 
-// 投稿詳細
+// プロジェクト勤務付月詳細
 const UserOnProjectMonthDetail = async ({ month }: UserOnProjectMonthDetailProps) => {
   const router = useRouter()
   let totalWorkHours: number = 0
@@ -50,13 +51,13 @@ const UserOnProjectMonthDetail = async ({ month }: UserOnProjectMonthDetailProps
     <div className="flex justify-between">
       <div className="text-2xl font-bold text-left mb-5">プロジェクト勤務表</div>
       <div className="flex justify-normal m-2">
-        <Button className="m-2" onSelect={handlePreviousMonth}>
+        <Button className="m-2 bg-emerald-400 hover:bg-emerald-500 rounded-lg p-2" onSelect={handlePreviousMonth}>
           <ArrowLeft className="mr-2 h-4 w-4" /> 先月
         </Button>
-        <Button className="m-2" onSelect={handleThisMonth}>
+        <Button className="m-2 bg-emerald-400 hover:bg-emerald-500 rounded-lg p-2" onSelect={handleThisMonth}>
           <CalendarCheck className="mr-2 h-4 w-4" /> 今月
         </Button>
-        <Button className="m-2" onSelect={handleNextMonth}>
+        <Button className="m-2 bg-emerald-400 hover:bg-emerald-500 rounded-lg p-2" onSelect={handleNextMonth}>
           <ArrowRight className="mr-2 h-4 w-4" /> 来月
         </Button>
       </div>
@@ -74,6 +75,7 @@ const UserOnProjectMonthDetail = async ({ month }: UserOnProjectMonthDetailProps
             <TableHead className="w-[100px] text-center font-bold">休憩時間</TableHead>
             <TableHead className="w-[100px] text-center font-bold">残業時間</TableHead>
             <TableHead className="w-[150px] text-center font-bold">備考</TableHead>
+            <TableHead className="w-[005px] text-center font-bold"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -107,6 +109,11 @@ const UserOnProjectMonthDetail = async ({ month }: UserOnProjectMonthDetailProps
                 <TableCell className="text-center">{day.rest_hours}</TableCell>
                 <TableCell className="text-center">0</TableCell>
                 <TableCell className="text-center">{day.private_note}</TableCell>
+                <TableCell> 
+                  <Button 
+                    className="bg-violet-400 hover:bg-violet-500"
+                    onClick={() => { router.push(`/useronprojectday/${day.uid}`)}}>編集</Button>
+                </TableCell>
               </TableRow>
             )})}
         </TableBody>

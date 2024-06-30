@@ -1,3 +1,5 @@
+"use server"
+
 // 共通のAPIリクエスト
 const fetchAPI = async (url: string, options: RequestInit) => {
   const apiUrl = process.env.API_URL
@@ -28,7 +30,7 @@ const fetchAPI = async (url: string, options: RequestInit) => {
   }
 }
 
-export interface UserOnProjectDayType {
+export interface ReadUserOnProjectDayType {
   uid: string
   day_index: number
   date_day: string
@@ -50,7 +52,7 @@ export interface UserOnProjectMonthType {
   public_note: string
   updated_at: string
   created_at: string
-  days: UserOnProjectDayType[]
+  days: ReadUserOnProjectDayType[]
 }
 
 interface GetUserOnProjectMonthDetailProps {

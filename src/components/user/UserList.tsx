@@ -27,11 +27,11 @@ const UserList = async () => {
   return (
     <div className="container mx-auto py-10 w-screen-2xl">
       <div className="text-2xl font-bold text-left mb-5">ユーザ一覧</div>
-      <div className="text-right mb-5">
+      {/* <div className="text-right mb-5">
         <Button asChild className="font-bold">
-          <Link href="/project/new">新規登録</Link>
+          <Link href="/user/new">新規登録</Link>
         </Button>
-      </div>
+      </div> */}
       <div className="w-4/5">
         <DataTable columns={columns} data={users} />
       </div>
