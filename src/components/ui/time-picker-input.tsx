@@ -43,6 +43,7 @@ const TimePickerInput = React.forwardRef<
     ref
   ) => {
     const [flag, setFlag] = React.useState<boolean>(false);
+    const [inputBuffer, setInputBuffer] = React.useState<string>("");
  
     /**
      * allow the user to enter the second digit within 2 seconds
@@ -75,17 +76,29 @@ const TimePickerInput = React.forwardRef<
         const tempDate = new Date(date);
         setDate(setDateByType(tempDate, newValue, picker));
       }
+      // if (e.key >= "0" && e.key <= "9") {
+      //   const newValue = !flag
+      //     ? "0" + e.key
+      //     : calculatedValue.slice(1, 2) + e.key;
+      //   if (flag) onRightFocus?.();
+      //   setFlag((prev) => !prev);
+      //   const tempDate = new Date(date);
+      //   setDate(setDateByType(tempDate, newValue, picker));
+      // }
       if (e.key >= "0" && e.key <= "9") {
-        const newValue = !flag
-          ? "0" + e.key
-          : calculatedValue.slice(1, 2) + e.key;
-        if (flag) onRightFocus?.();
-        setFlag((prev) => !prev);
-        const tempDate = new Date(date);
-        setDate(setDateByType(tempDate, newValue, picker));
+        const newBuffer = flag ? inputBuffer + e.key : e.key
+        setInputBuffer(newBuffer)
+        setFlag(newBuffer.length === 1)     // Set flag only after first digit
+        if (newBuffer.length === 2) {
+          const tempDate = new Date(date)
+          setDate(setDateByType(tempDate, newBuffer, picker))
+          setFlag(false)        // Reset flag after two digits
+          setInputBuffer("")    // Clear buffer after two digits
+          onRightFocus?.()      // Move to next input
+        }
       }
     };
- 
+
     return (
       <Input
         ref={ref}

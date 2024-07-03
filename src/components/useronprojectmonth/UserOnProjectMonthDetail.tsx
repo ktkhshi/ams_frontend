@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table-shallow"
 import { 
   ArrowLeft,
   ArrowRight,
@@ -89,11 +89,11 @@ const UserOnProjectMonthDetail = async ({ month }: UserOnProjectMonthDetailProps
                                   - 
                                   new Date(day.date_day + " " + day.work_started_at).getTime()
                                 ).valueOf() / (1000 * 60 * 60) - parseFloat(day.rest_hours))
-                              ) 
+                              )
                               : (0)
             totalWorkHours = totalWorkHours + workHours
             return (
-              <TableRow key={day.uid}>
+              <TableRow key={day.uid} className="h-1 p-0 m-0">
                 <TableCell className="text-center text-xl">{day.should_work_day ? "●": ""}</TableCell>
                 <TableCell className={cn("text-center", isSunday ? 
                                                         ("bg-red-200") : 

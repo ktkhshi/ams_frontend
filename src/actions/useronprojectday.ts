@@ -118,8 +118,6 @@ export const createUserOnProjectDayDetail = async ({
     times: times,
   })
 
-  console.log(body)
-
   const options = {
     method: "POST",
     headers: {

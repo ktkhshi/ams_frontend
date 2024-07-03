@@ -19,13 +19,13 @@ export const columns: ColumnDef<User>[] = [
   {
     id: "select",
     cell: ({ row }) => {
-      const org_project = row.original
+      const org_user = row.original
 
       const { user, setUser } = UseUserContext();
       
       const updateContext = () => { 
-        user.id = org_project.id
-        user.name = org_project.name
+        user.id = org_user.id
+        user.name = org_user.name
         setUser(user)
 
         toast.success("コピーしました")

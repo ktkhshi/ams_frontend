@@ -26,13 +26,17 @@ const UserOnProjectMonthBase = async ({ userUid, projects }: UserOnProjectMonthB
   const router = useRouter()
   const [selectedItem, setSelectedItem] = useState<string | undefined>(undefined)
 
+  const today = new Date()
+  const date = new Date(today.getFullYear(), today.getMonth(), 1)
+  const date_ym = formatDate(date as Date, "yyyyMM")
+
+  if (projects.length == 1) {
+    router.push(`/useronprojectmonth/${userUid}/${date_ym}/${projects[0].uid}`)
+  }
+
   const handleChange = (value: string) => {
     setSelectedItem(value);
     const project = projects.find((projects) => projects.main_name == value)
-
-    const today = new Date()
-    const date = new Date(today.getFullYear(), today.getMonth(), 1)
-    const date_ym = formatDate(date as Date, "yyyyMM")
     const projectUid: string= project?.uid as string
     router.push(`/useronprojectmonth/${userUid}/${date_ym}/${projectUid}`)
   }

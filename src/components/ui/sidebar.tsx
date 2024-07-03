@@ -29,6 +29,8 @@ import {
 import { useRouter } from "next/navigation"
 
 import { UserType } from "@/lib/nextauth"
+import { ja } from "date-fns/locale"
+import { formatDate } from "date-fns"
 
 interface SidebarProps {
   user: UserType
@@ -36,15 +38,16 @@ interface SidebarProps {
 
 export default function Sidebar({ user }: SidebarProps) {
   const router = useRouter()
-  
+  const date_ym = formatDate(Date.now(), 'yyyyMM', {locale: ja})
+
   const menuList = [
     {
       group: "User Menu",
       items: [
         {
-          link: `/useronprojectmonth/${user.uid}/202406/`,
+          link: `/useronprojectmonth/${user.uid}/${date_ym}/`,
           icon: <CalendarCheck/>,
-          text: "勤務プロジェクト選択"
+          text: "勤務プロジェクト"
         },
       ]
     },
@@ -52,7 +55,7 @@ export default function Sidebar({ user }: SidebarProps) {
       group: "Settings",
       items: [
         {
-          link: "/",
+          link: `/userspecialattendance/${user.uid}`,
           icon: <CalendarHeart/>,
           text: "休暇"
         },
