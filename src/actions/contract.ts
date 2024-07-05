@@ -87,14 +87,14 @@ export const getContractList = async () => {
 }
 
 // 契約詳細取得
-export const getContractDetail = async ({ contractId }: { contractId: string }) => {
+export const getContract = async (contractId: string ) => {
   const options: RequestInit = {
     method: "GET",
     cache: "no-store",
   }
 
   // クライアント詳細取得
-  const result = await fetchAPI(`/api/contract-detail/${contractId}`, options)
+  const result = await fetchAPI(`/api/contracts/${contractId}`, options)
 
   if (!result.success) {
     console.error(result.error)

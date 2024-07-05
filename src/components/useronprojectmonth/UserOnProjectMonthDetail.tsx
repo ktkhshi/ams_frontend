@@ -17,51 +17,61 @@ import {
   CalendarCheck,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { formatDate } from "date-fns"
+import { addMonths, formatDate } from "date-fns"
 import { ja } from 'date-fns/locale'
 import { Button } from "../ui/button"
 import { useRouter } from "next/navigation"
-import toast from "react-hot-toast"
+import { ContractType } from "@/actions/contract"
 
 interface UserOnProjectMonthDetailProps {
   month: UserOnProjectMonthType
+  contract: ContractType
+  userUid: string
+  projectUid: string
 }
 
 // プロジェクト勤務付月詳細
-const UserOnProjectMonthDetail = async ({ month }: UserOnProjectMonthDetailProps) => {
+const UserOnProjectMonthDetail = async ({ month, contract, userUid, projectUid }: UserOnProjectMonthDetailProps) => {
   const router = useRouter()
+  const today = new Date()
   let totalWorkHours: number = 0
-  const thisMonth = new Date(month.days[0].date_day)
+  let thisMonth = new Date(month.days[0].date_day)
 
   const handlePreviousMonth = () => {
-    router.push(`/`)
+    thisMonth = addMonths(thisMonth, -1)
+    const date_ym = formatDate(thisMonth, "yyyyMM")
+    router.push(`/useronprojectmonth/${userUid}/${date_ym}/${projectUid}`)
   }
 
   const handleThisMonth = () => {
-    router.push(`/`)
+    const thisMonth = new Date(today.getFullYear(), today.getMonth(), 1)
+    const date_ym = formatDate(thisMonth, "yyyyMM")
+    router.push(`/useronprojectmonth/${userUid}/${date_ym}/${projectUid}`)
   }
 
   const handleNextMonth = () => {
-    router.push(`/`)
+    thisMonth = addMonths(thisMonth, 1)
+    const date_ym = formatDate(thisMonth, "yyyyMM")
+    router.push(`/useronprojectmonth/${userUid}/${date_ym}/${projectUid}`)
   }
 
-  // 月を取得した時に1月が0から始まるため＋1する
   return (
     <div className="container mx-auto py-10 w-full">
     <div className="flex justify-between">
       <div className="text-2xl font-bold text-left mb-5">プロジェクト勤務表</div>
       <div className="flex justify-normal m-2">
-        <Button className="m-2 bg-emerald-400 hover:bg-emerald-500 rounded-lg p-2" onSelect={handlePreviousMonth}>
+        <Button className="m-2 bg-emerald-400 hover:bg-emerald-500 rounded-lg p-2" onClick={handlePreviousMonth}>
           <ArrowLeft className="mr-2 h-4 w-4" /> 先月
         </Button>
-        <Button className="m-2 bg-emerald-400 hover:bg-emerald-500 rounded-lg p-2" onSelect={handleThisMonth}>
+        <Button className="m-2 bg-emerald-400 hover:bg-emerald-500 rounded-lg p-2" onClick={handleThisMonth}>
           <CalendarCheck className="mr-2 h-4 w-4" /> 今月
         </Button>
-        <Button className="m-2 bg-emerald-400 hover:bg-emerald-500 rounded-lg p-2" onSelect={handleNextMonth}>
+        <Button className="m-2 bg-emerald-400 hover:bg-emerald-500 rounded-lg p-2" onClick={handleNextMonth}>
           <ArrowRight className="mr-2 h-4 w-4" /> 来月
         </Button>
       </div>
     </div>
+    {/* 月を取得した時に1月が0から始まるため＋1する */}
     <div className="text-2xl font-bold">{thisMonth.getFullYear() + "年" + (thisMonth.getMonth() + 1) + "月"}</div>
     <div className="w-full">
       <Table className="table-auto">
@@ -79,40 +89,42 @@ const UserOnProjectMonthDetail = async ({ month }: UserOnProjectMonthDetailProps
           </TableRow>
         </TableHeader>
         <TableBody>
-          {month.days.map((day) => {
-            const isSunday = (new Date(day.date_day)).getDay() == 0
-            const isSaturday = (new Date(day.date_day)).getDay() == 6
-            const workHours = day.work_started_at != null && day.work_ended_at != null && day.rest_hours != null ? 
+          {month.days.map((uopday) => {
+            const dateDay = new Date(uopday.date_day)
+            const isSunday = dateDay.getDay() == 0
+            const isSaturday = dateDay.getDay() == 6
+            const workHours = uopday.work_started_at != null && uopday.work_ended_at != null && uopday.rest_hours != null ? 
                               (
                                 ((
-                                  new Date(day.date_day + " " + day.work_ended_at).getTime() 
+                                  new Date(uopday.date_day + " " + uopday.work_ended_at).getTime() 
                                   - 
-                                  new Date(day.date_day + " " + day.work_started_at).getTime()
-                                ).valueOf() / (1000 * 60 * 60) - parseFloat(day.rest_hours))
+                                  new Date(uopday.date_day + " " + uopday.work_started_at).getTime()
+                                ).valueOf() / (1000 * 60 * 60) - parseFloat(uopday.rest_hours))
                               )
                               : (0)
             totalWorkHours = totalWorkHours + workHours
+            const overWorkHours = workHours == 0 ? 0 : workHours - contract.work_hours_a_day
             return (
-              <TableRow key={day.uid} className="h-1 p-0 m-0">
-                <TableCell className="text-center text-xl">{day.should_work_day ? "●": ""}</TableCell>
+              <TableRow key={uopday.uid} className="h-1 p-0 m-0">
+                <TableCell className="text-center text-xl">{uopday.should_work_day ? "●": ""}</TableCell>
                 <TableCell className={cn("text-center", isSunday ? 
                                                         ("bg-red-200") : 
                                                         (
                                                           isSaturday ? ("bg-blue-200") : ("")
                                                         )
                                         )}>
-                  {formatDate(new Date(day.date_day), 'MM/dd(E)', {locale: ja})}
+                  {formatDate(dateDay, 'MM/dd(E)', {locale: ja})}
                 </TableCell>
-                <TableCell className="text-center">{day.work_started_at}</TableCell>
-                <TableCell className="text-center">{day.work_ended_at}</TableCell>
-                <TableCell className="text-center">{workHours.toFixed(2)}</TableCell>
-                <TableCell className="text-center">{day.rest_hours}</TableCell>
-                <TableCell className="text-center">0</TableCell>
-                <TableCell className="text-center">{day.private_note}</TableCell>
+                <TableCell className={cn("text-center", dateDay.getTime() > today.getTime() ? "text-slate-300" : "")}>{uopday.work_started_at}</TableCell>
+                <TableCell className={cn("text-center", dateDay.getTime() > today.getTime() ? "text-slate-300" : "")}>{uopday.work_ended_at}</TableCell>
+                <TableCell className={cn("text-center", dateDay.getTime() > today.getTime() ? "text-slate-300" : "")}>{workHours.toFixed(2)}</TableCell>
+                <TableCell className={cn("text-center", dateDay.getTime() > today.getTime() ? "text-slate-300" : "")}>{uopday.rest_hours}</TableCell>
+                <TableCell className={cn("text-center", dateDay.getTime() > today.getTime() ? "text-slate-300" : "")}>{overWorkHours.toFixed(2)}</TableCell>
+                <TableCell className="text-center">{uopday.private_note}</TableCell>
                 <TableCell> 
                   <Button 
                     className="bg-violet-400 hover:bg-violet-500"
-                    onClick={() => { router.push(`/useronprojectday/${day.uid}`)}}>編集</Button>
+                    onClick={() => { router.push(`/useronprojectday/${uopday.uid}`)}}>編集</Button>
                 </TableCell>
               </TableRow>
             )})}

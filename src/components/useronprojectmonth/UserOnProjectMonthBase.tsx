@@ -13,16 +13,17 @@ import {
 } from "@/components/ui/select"
 
 import { ProjectType } from "@/actions/project"
+import { ContractType } from "@/actions/contract"
 import { formatDate } from "date-fns"
 import { useRouter } from "next/navigation"
 
 interface UserOnProjectMonthBaseProps {
   userUid: string
-  projects: ProjectType[]
+  uopInfos: Array<[ProjectType, ContractType]>
 }
 
 // 投稿詳細
-const UserOnProjectMonthBase = async ({ userUid, projects }: UserOnProjectMonthBaseProps) => {
+const UserOnProjectMonthBase = async ({ userUid, uopInfos }: UserOnProjectMonthBaseProps) => {
   const router = useRouter()
   const [selectedItem, setSelectedItem] = useState<string | undefined>(undefined)
 
@@ -30,15 +31,16 @@ const UserOnProjectMonthBase = async ({ userUid, projects }: UserOnProjectMonthB
   const date = new Date(today.getFullYear(), today.getMonth(), 1)
   const date_ym = formatDate(date as Date, "yyyyMM")
 
-  if (projects.length == 1) {
-    router.push(`/useronprojectmonth/${userUid}/${date_ym}/${projects[0].uid}`)
+  if (uopInfos.length == 1) {
+    router.push(`/useronprojectmonth/${userUid}/${date_ym}/${uopInfos[0][0].uid}?cUid=${uopInfos[0][1].uid}`)
   }
 
   const handleChange = (value: string) => {
     setSelectedItem(value);
-    const project = projects.find((projects) => projects.main_name == value)
-    const projectUid: string= project?.uid as string
-    router.push(`/useronprojectmonth/${userUid}/${date_ym}/${projectUid}`)
+    const tuple = uopInfos.find((tuple) => tuple[0].main_name == value)
+    const projectUid: string = tuple == undefined ? "" : tuple[0].uid as string
+    const contractUid: string = tuple == undefined ? "" : tuple[1].uid as string
+    router.push(`/useronprojectmonth/${userUid}/${date_ym}/${projectUid}?cUid=${contractUid}`)
   }
 
   return (  
@@ -49,12 +51,12 @@ const UserOnProjectMonthBase = async ({ userUid, projects }: UserOnProjectMonthB
         </SelectTrigger>
         <SelectContent className="w-[400px]">
           <SelectGroup>
-            {projects.map((project) => (
+            {uopInfos.map((tuple) => (
               <SelectItem 
-                key={project.uid} 
-                value={project.main_name}
+                key={tuple[0].uid} 
+                value={tuple[0].main_name}
               >
-                {project.main_name}
+                {tuple[0].main_name}
               </SelectItem>
             ))}
           </SelectGroup>

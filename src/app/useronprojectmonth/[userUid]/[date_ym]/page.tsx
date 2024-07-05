@@ -30,7 +30,7 @@ export default async function UserOnProjectMonthPage({ params }: UserOnProjectMo
     )
   }
 
-  let projects = new Array<ProjectType>()
+  let array = new Array<[ProjectType, ContractType]>()
 
   uoplist.forEach((element: 
     { uid: string;
@@ -41,17 +41,29 @@ export default async function UserOnProjectMonthPage({ params }: UserOnProjectMo
       updated_at: string;
       created_at: string;
     }) => {
-      let data = {} as ProjectType
-      data.uid = element.project.uid
-      data.main_name = element.project.main_name
-      data.sub_name = element.project.sub_name
-      data.note = element.project.note
-      data.created_at = element.project.created_at
-      data.updated_at = element.project.updated_at
-      projects.push(data)
+      let project = {} as ProjectType
+      project.uid = element.project.uid
+      project.main_name = element.project.main_name
+      project.sub_name = element.project.sub_name
+      project.note = element.project.note
+      project.created_at = element.project.created_at
+      project.updated_at = element.project.updated_at
+      let contract = {} as ContractType
+      contract.uid = element.contract.uid
+      contract.unit_price = element.contract.unit_price
+      contract.contract_type = element.contract.contract_type
+      contract.lower_hours_a_month = element.contract.lower_hours_a_month
+      contract.upper_hours_a_month = element.contract.upper_hours_a_month
+      contract.latest_work_started_at = element.contract.latest_work_started_at
+      contract.earliest_work_ended_at = element.contract.earliest_work_ended_at
+      contract.work_hours_a_day = element.contract.work_hours_a_day
+      contract.started_on = element.contract.started_on
+      contract.ended_on = element.contract.ended_on
+      contract.contract_name = element.contract.contract_name
+      array.push([project, contract])
   })
 
   return (
-     <UserOnProjectMonthBase userUid={userUid} projects={projects}/>
+     <UserOnProjectMonthBase userUid={userUid} arrayOfProjectandContract={array}/>
   )
 }
