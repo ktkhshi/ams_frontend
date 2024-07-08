@@ -62,8 +62,7 @@ export interface UserSpecialAttendanceType {
   uid: string
   user: UserType
   date_day: string
-  attendance_type: AttendanceType
-  attendance_name: string
+  attendance_type: number
   note: string
   updated_at: string
   created_at: string
@@ -117,8 +116,6 @@ export const createUserSpecialAttendance = async ({
     },
     body,
   }
-
-  console.log(options)
 
   // 新規ユーザ特別勤を送信
   const result = await fetchAPI("/api/userspecialattendances/", options)

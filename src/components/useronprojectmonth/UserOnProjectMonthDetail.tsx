@@ -1,6 +1,9 @@
 "use client"
 
-import { UserOnProjectMonthType } from "@/actions/useronprojectmonth"
+import { 
+  ReadUserOnProjectDayType, 
+  UserOnProjectMonthType 
+} from "@/actions/useronprojectmonth"
 import {
   Table,
   TableBody,
@@ -55,6 +58,23 @@ const UserOnProjectMonthDetail = async ({ month, contract, userUid, projectUid }
     router.push(`/useronprojectmonth/${userUid}/${date_ym}/${projectUid}`)
   }
 
+  const getDateBgClassName = (uopday: ReadUserOnProjectDayType) => {
+    const dateDay = new Date(uopday.date_day)
+    switch (dateDay.getDay()) {
+      case 0:
+        return "bg-red-200"
+      case 6:
+        return "bg-blue-200"
+      default:
+        if (uopday.date_name === "") {
+          return ""
+        }
+        else {
+          return "bg-orange-200"
+        }
+    }
+  }
+
   return (
     <div className="container mx-auto py-10 w-full">
     <div className="flex justify-between">
@@ -77,8 +97,9 @@ const UserOnProjectMonthDetail = async ({ month, contract, userUid, projectUid }
       <Table className="table-auto">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[055px] text-center font-bold">稼働日</TableHead>
+            <TableHead className="w-[055px] text-center font-bold text-xs">稼働日</TableHead>
             <TableHead className="w-[005px] text-center font-bold">日付</TableHead>
+            <TableHead className="w-[055px] text-center font-bold text-xs">日付名</TableHead>
             <TableHead className="w-[100px] text-center font-bold">開始時刻</TableHead>
             <TableHead className="w-[100px] text-center font-bold">終了時刻</TableHead>
             <TableHead className="w-[100px] text-center font-bold">稼働時間</TableHead>
@@ -91,8 +112,6 @@ const UserOnProjectMonthDetail = async ({ month, contract, userUid, projectUid }
         <TableBody>
           {month.days.map((uopday) => {
             const dateDay = new Date(uopday.date_day)
-            const isSunday = dateDay.getDay() == 0
-            const isSaturday = dateDay.getDay() == 6
             const workHours = uopday.work_started_at != null && uopday.work_ended_at != null && uopday.rest_hours != null ? 
                               (
                                 ((
@@ -107,14 +126,10 @@ const UserOnProjectMonthDetail = async ({ month, contract, userUid, projectUid }
             return (
               <TableRow key={uopday.uid} className="h-1 p-0 m-0">
                 <TableCell className="text-center text-xl">{uopday.should_work_day ? "●": ""}</TableCell>
-                <TableCell className={cn("text-center", isSunday ? 
-                                                        ("bg-red-200") : 
-                                                        (
-                                                          isSaturday ? ("bg-blue-200") : ("")
-                                                        )
-                                        )}>
+                <TableCell className={cn("text-center", getDateBgClassName(uopday))}>
                   {formatDate(dateDay, 'MM/dd(E)', {locale: ja})}
                 </TableCell>
+                <TableCell className="text-center text-sl">{uopday.date_name}</TableCell>
                 <TableCell className={cn("text-center", dateDay.getTime() > today.getTime() ? "text-slate-300" : "")}>{uopday.work_started_at}</TableCell>
                 <TableCell className={cn("text-center", dateDay.getTime() > today.getTime() ? "text-slate-300" : "")}>{uopday.work_ended_at}</TableCell>
                 <TableCell className={cn("text-center", dateDay.getTime() > today.getTime() ? "text-slate-300" : "")}>{workHours.toFixed(2)}</TableCell>

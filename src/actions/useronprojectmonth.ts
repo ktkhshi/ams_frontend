@@ -34,6 +34,7 @@ export interface ReadUserOnProjectDayType {
   uid: string
   day_index: number
   date_day: string
+  date_name: string
   should_work_day: boolean
   work_started_at: string | null
   work_ended_at: string | null

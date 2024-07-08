@@ -90,8 +90,8 @@ const UserSpecialAttendanceNew = ({ user, attendanceTypeList }: UserSpecialAtten
       }
 
       toast.success("作成しました")
-      router.push(`/userspecialattendance-list/${user.uid}`)
-      router.refresh()
+      router.push(`/userspecialattendance/${user.uid}`)
+      // router.refresh()
     } catch (error) {
       toast.error("作成に失敗しました")
     } finally {

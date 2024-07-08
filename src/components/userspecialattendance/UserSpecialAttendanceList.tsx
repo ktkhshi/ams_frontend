@@ -40,7 +40,7 @@ const UserSpecialAttendanceList = async ({ userUid, attendanceTypeList }: UserSp
   }
 
   const usa_disp: UserSpecialAttendanceColumnType[] = userspecialattendances.map((data) => {
-    const found = attendanceTypeList.find((x) => x.id == data.attendance_type.id)
+    const found = attendanceTypeList.find((x) => x.id === data.attendance_type)
     return {
       date_day: formatDate(new Date(data.date_day), 'yyyy年MM月dd日(E)', {locale: ja}),
       attendance_name: found ? found.attendance_name : "",

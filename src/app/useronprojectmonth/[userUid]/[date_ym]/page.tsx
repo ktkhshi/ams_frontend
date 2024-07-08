@@ -64,6 +64,6 @@ export default async function UserOnProjectMonthPage({ params }: UserOnProjectMo
   })
 
   return (
-     <UserOnProjectMonthBase userUid={userUid} arrayOfProjectandContract={array}/>
+     <UserOnProjectMonthBase userUid={userUid} uopInfos={array}/>
   )
 }
