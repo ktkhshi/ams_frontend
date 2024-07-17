@@ -25,10 +25,6 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-interface RootLayoutProps {
-  children: React.ReactNode
-}
-
 const RootLayout = async ({ children }: RootLayoutProps) => {
   // 認証情報
   const user = await getAuthSession()

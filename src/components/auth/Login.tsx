@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
+import { PasswordInput } from "@/components/ui/password-input"
 import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
 import { signIn } from "next-auth/react"
@@ -94,7 +95,7 @@ const Login = () => {
               <FormItem>
                 <FormLabel>パスワード</FormLabel>
                 <FormControl>
-                  <Input placeholder="password" {...field}/>
+                  <PasswordInput placeholder="password" {...field}/>
                 </FormControl>
                 <FormMessage/>
               </FormItem>

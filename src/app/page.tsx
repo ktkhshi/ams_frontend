@@ -1,30 +1,13 @@
-import { getPostList } from "@/actions/post"
-import PostItem from "@/components/post/PostItem"
+import Head from "next/head"
 
 // トップページ
 const Home = async () => {
-  // 投稿一覧を取得
-  const { success, posts } = await getPostList()
-
-  if (!success) {
-    return (
-      <div className="text-center text-sm text-gray-500">
-        投稿の取得に失敗しました
-      </div>
-    )
-  }
-
-  if (posts.length == 0) {
-    return (
-      <div className="text-center text-sm text-gray-500">投稿がありません</div>
-    )
-  }
-
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-      {posts.map((post) => (
-        <PostItem key={post.uid} post={post}/>
-      ))}
+    <div className="container mx-auto py-10 w-full">
+      <Head>
+        <title>勤務管理システム</title>
+        <meta name="description" content="勤務管理システム" />
+      </Head>
     </div>
   )
 }
