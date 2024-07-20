@@ -146,7 +146,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
                 <FormItem>
                   <FormLabel>単価</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="単価" {...field} />
+                    <Input type="number" className="w-[150px]" placeholder="単価" {...field} />
                   </FormControl>
                   <FormMessage/>
                 </FormItem>
@@ -161,7 +161,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
                   <FormLabel>契約形態</FormLabel>
                   <FormControl>
                     <Select>
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-[150px]">
                         <SelectValue placeholder="契約形態" />
                       </SelectTrigger>
                       <SelectContent>
@@ -169,7 +169,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
                           <SelectItem
                             key={value}
                             value={value.toString()}
-                            className="w-[180px]"
+                            className="w-[150px]"
                           >
                             {label}  
                           </SelectItem>
@@ -191,7 +191,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
                   <FormItem>
                     <FormLabel>下限時間</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="下限時間" {...field} />
+                      <Input type="number" className="w-[150px]" placeholder="下限時間" {...field} />
                     </FormControl>
                     <FormMessage/>
                   </FormItem>
@@ -205,7 +205,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
                   <FormItem className="ml-5">
                     <FormLabel>上限時間</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="上限時間"　{...field} />
+                      <Input type="number" className="w-[150px]" placeholder="上限時間"　{...field} />
                     </FormControl>
                     <FormMessage/>
                   </FormItem>
@@ -214,7 +214,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
             </div>
             
             {/* 規定の開始時刻と規定の終了時刻 */}
-            <div className="flex justify-start">
+            <div className="flex justify-start gap-4">
               <FormField
                 control={form.control}
                 name="latest_work_started_at"
@@ -250,34 +250,36 @@ const ContractNew = ({ user }: ContractNewProps) => {
               />
             </div>
 
-
-            <FormField
-              control={form.control}
-              name="work_hours_a_day"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>所定勤務時間</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="所定勤務時間" {...field} />
-                  </FormControl>
-                  <FormMessage/>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="rest_hours_a_day"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>所定休憩時間</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="所定休憩時間" {...field} />
-                  </FormControl>
-                  <FormMessage/>
-                </FormItem>
-              )}
-            />
-
+            {/* 勤務時間と休憩時間 */}
+            <div className="flex justify-start gap-4">
+              <FormField
+                control={form.control}
+                name="work_hours_a_day"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>所定勤務時間</FormLabel>
+                    <FormControl>
+                      <Input type="number" className="w-[100px] mr-14" placeholder="所定勤務時間" {...field} />
+                    </FormControl>
+                    <FormMessage/>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="rest_hours_a_day"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>所定休憩時間</FormLabel>
+                    <FormControl>
+                      <Input type="number" className="w-[100px]" placeholder="所定休憩時間" {...field} />
+                    </FormControl>
+                    <FormMessage/>
+                  </FormItem>
+                )}
+              />
+            </div>
+            
             <FormField
               control={form.control}
               name="started_on"
@@ -290,7 +292,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[280px] justify-start text-left font-normal",
+                            "ml-5 w-[150px] justify-start text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >
@@ -325,7 +327,7 @@ const ContractNew = ({ user }: ContractNewProps) => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[280px] justify-start text-left font-normal",
+                            "ml-5 w-[150px] justify-start text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >

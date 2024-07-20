@@ -44,23 +44,24 @@ export const columns: ColumnDef<Client>[] = [
     enableHiding: false,
     size: 1,
   },
-  {
-    accessorKey: "uid",
-    header: "キー",
-  },
+  // {
+  //   accessorKey: "uid",
+  //   header: "キー",
+  //   maxSize: 0,
+  // },
   {
     accessorKey: "person_in_charge",
     header: "担当者名",
-    size: 60,
+    size: 120,
   },
   {
     accessorKey: "address",
     header: "住所",
-    size: 100,
+    size: 250,
   },
   {
     accessorKey: "note",
     header: "備考",
-    size: 220,
+    size: 200,
   },
 ]

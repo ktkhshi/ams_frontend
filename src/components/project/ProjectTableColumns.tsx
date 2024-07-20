@@ -44,10 +44,10 @@ export const columns: ColumnDef<Project>[] = [
     enableHiding: false,
     size: 1,
   },
-  {
-    accessorKey: "uid",
-    header: "キー",
-  },
+  // {
+  //   accessorKey: "uid",
+  //   header: "キー",
+  // },
   {
     accessorKey: "main_name",
     header: "メイン名",

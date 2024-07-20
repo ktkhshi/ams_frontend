@@ -14,10 +14,10 @@ export type UserOnProject = {
 }
 
 export const columns: ColumnDef<UserOnProject>[] = [
-  {
-    accessorKey: "uid",
-    header: "キー",
-  },
+  // {
+  //   accessorKey: "uid",
+  //   header: "キー",
+  // },
   {
     accessorKey: "user_name",
     header: "ユーザ名",

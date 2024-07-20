@@ -38,6 +38,7 @@ const UserOnProjectMonthDetail = async ({ month, contract, userUid, projectUid }
   const router = useRouter()
   const today = new Date()
   let totalWorkHours: number = 0
+  let totalOverWorkHours: number = 0
   let thisMonth = new Date(month.days[0].date_day)
 
   const handlePreviousMonth = () => {
@@ -122,11 +123,13 @@ const UserOnProjectMonthDetail = async ({ month, contract, userUid, projectUid }
                               )
                               : (0)
             totalWorkHours = totalWorkHours + workHours
+
             const overWorkHours = workHours == 0 ? 0 : workHours - contract.work_hours_a_day
+            totalOverWorkHours = totalOverWorkHours + overWorkHours
             return (
               <TableRow key={uopday.uid} className="h-1 p-0 m-0">
                 <TableCell className="text-center text-xl">{uopday.should_work_day ? "●": ""}</TableCell>
-                <TableCell className={cn("text-center", getDateBgClassName(uopday))}>
+                <TableCell className={cn("rounded-lg text-center", getDateBgClassName(uopday))}>
                   {formatDate(dateDay, 'MM/dd(E)', {locale: ja})}
                 </TableCell>
                 <TableCell className="text-center text-sl">{uopday.date_name}</TableCell>
@@ -139,15 +142,18 @@ const UserOnProjectMonthDetail = async ({ month, contract, userUid, projectUid }
                 <TableCell> 
                   <Button 
                     className="bg-violet-400 hover:bg-violet-500"
-                    onClick={() => { router.push(`/useronprojectday/${uopday.uid}`)}}>編集</Button>
+                    onClick={() => { router.push(`/useronprojectday/${uopday.uid}`)}}>編集
+                  </Button>
                 </TableCell>
               </TableRow>
             )})}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell colSpan={5}>Total</TableCell>
             <TableCell className="text-center">{totalWorkHours.toFixed(2)}</TableCell>
+            <TableCell />
+            <TableCell className="text-center">{totalOverWorkHours.toFixed(2)}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

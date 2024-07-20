@@ -36,7 +36,7 @@ const ContractList = async () => {
 
   const contracts_disp: ContractColumnType[] = contracts.map((data) => ({
     uid: data.uid,
-    unit_price: data.unit_price,
+    unit_price: data.unit_price / 10000,  // 万円で表示
     contract_type_text: GetContractTypeText(data.contract_type),
     lower_hours_a_month: data.lower_hours_a_month,
     upper_hours_a_month: data.upper_hours_a_month,

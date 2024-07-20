@@ -155,7 +155,7 @@ const UserOnProjectDayDetail = async ({ user, day }: UserOnProjectDayDetailProps
       }
 
       toast.success("作成しました")
-      router.push(`/`)
+      router.back()
       router.refresh()
     } catch (error) {
       if (error instanceof Error) {
@@ -171,11 +171,18 @@ const UserOnProjectDayDetail = async ({ user, day }: UserOnProjectDayDetailProps
   return (
     <div className="container mx-auto py-10 w-full">
       <div>
-        <p className="text-2xl">
+        <p className="text-2xl font-bold">
           {formatDate(new Date(day.date_day), 'yyyy/MM/dd(E)', {locale: ja})}
         </p>
       </div>
-      <div>    
+      <div className="text-right mb-5">
+        <button 
+          className="rounded-lg w-16 mx-auto bg-lime-400 hover:bg-lime-500 p-2"
+          onClick={() => router.back()}>
+            戻る
+        </button>
+      </div>
+      <div> 
       <form
         onSubmit={handleSubmit((data) => {
           console.log("data submitted:", data)
@@ -195,7 +202,7 @@ const UserOnProjectDayDetail = async ({ user, day }: UserOnProjectDayDetailProps
         return (
           <div className="flex flex-row items-center" key={field.id}>
             <div>
-              <p className="m-6">{field.timeIndex == 0 ? ("New") : (field.timeIndex)} :</p>
+              <p className="m-2 w-[20px]">{field.timeIndex == 0 ? ("New") : (field.timeIndex)} :</p>
             </div>
             <div className="flex flex-row">
               <div className="basis-1/4 m-5">

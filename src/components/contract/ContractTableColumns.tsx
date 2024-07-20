@@ -49,15 +49,15 @@ export const columns: ColumnDef<ContractColumnType>[] = [
     enableHiding: false,
     size: 1,
   },
-  {
-    accessorKey: "uid",
-    header: "キー",
-    size: 200,
-  },
+  // {
+  //   accessorKey: "uid",
+  //   header: "キー",
+  //   size: 200,
+  // },
   {
     accessorKey: "unit_price",
-    header: "単価",
-    size: 10,
+    header: "単価（万円）",
+    size: 100,
   },
   {
     accessorKey: "contract_type_text",
