@@ -14,7 +14,7 @@ import {
   CommandShortcut,
 } from "@/components/ui/command"
 
-import { 
+import {
   ArrowLeft,
   ArrowRight,
   CalendarCheck,
@@ -38,87 +38,121 @@ interface SidebarProps {
 
 export default function Sidebar({ user }: SidebarProps) {
   const router = useRouter()
-  const date_ym = formatDate(Date.now(), 'yyyyMM', {locale: ja})
+  const date_ym = formatDate(Date.now(), "yyyyMM", { locale: ja })
 
-  const menuList = [
+  const usermenuList = [
     {
       group: "User Menu",
       items: [
         {
           link: `/useronprojectmonth/${user.uid}/${date_ym}/`,
-          icon: <CalendarCheck/>,
-          text: "勤務プロジェクト"
+          icon: <CalendarCheck />,
+          text: "勤務プロジェクト",
         },
-      ]
+      ],
     },
     {
       group: "Settings",
       items: [
         {
           link: `/userspecialattendance/${user.uid}`,
-          icon: <CalendarHeart/>,
-          text: "休暇"
+          icon: <CalendarHeart />,
+          text: "休暇",
         },
         {
           link: "/",
-          icon: <NotebookTabs/>,
-          text: "プロジェクト詳細"
+          icon: <NotebookTabs />,
+          text: "プロジェクト詳細",
         },
-      ]
+      ],
+    },
+  ]
+
+  const adminmenuList = [
+    {
+      group: "User Menu",
+      items: [
+        {
+          link: `/useronprojectmonth/${user.uid}/${date_ym}/`,
+          icon: <CalendarCheck />,
+          text: "勤務プロジェクト",
+        },
+      ],
+    },
+    {
+      group: "Settings",
+      items: [
+        {
+          link: `/userspecialattendance/${user.uid}`,
+          icon: <CalendarHeart />,
+          text: "休暇",
+        },
+        {
+          link: "/",
+          icon: <NotebookTabs />,
+          text: "プロジェクト詳細",
+        },
+      ],
     },
     {
       group: "Admin Menu",
       items: [
         {
           link: "/user",
-          icon: <Users/>,
-          text: "ユーザ"
+          icon: <Users />,
+          text: "ユーザ",
         },
         {
           link: "/project",
-          icon: <BriefcaseBusiness/>,
-          text: "プロジェクト"
+          icon: <BriefcaseBusiness />,
+          text: "プロジェクト",
         },
         {
           link: "/client",
-          icon: <Building2/>,
-          text: "クライアント"
+          icon: <Building2 />,
+          text: "クライアント",
         },
         {
           link: "/contract",
-          icon: <Handshake/>,
-          text: "契約"
+          icon: <Handshake />,
+          text: "契約",
         },
         {
           link: "/useronproject",
           icon: <Rocket />,
-          text: "ユーザプロジェクト"
+          text: "ユーザプロジェクト",
         },
-      ]
+      ],
     },
   ]
 
+  const menuList = user.is_staff ? adminmenuList : usermenuList
+
   return (
-  <div className="flex flex-col gap-2 ml-4 min-w-40 border-r-2 min-h-screen">
-    <div>
-      <SidebarUserItem user={user}/>
-    </div>    
-    <div className="grow">
-      <Command style={{ overflow: 'visible' }}>
-        <CommandList style={{ overflow: 'visible' }}>
-          {menuList.map((menu: any, key: number) => (
-            <CommandGroup key={key} heading={menu.group}>
-              {menu.items.map((item: any, itemKey: number) => 
-                <CommandItem key={itemKey} className="flex gap-2 cursor-pointer"
-                  onSelect={() => router.push(item.link)}>
-                  {item.icon}
-                  {item.text}
-                </CommandItem>
-              )}
-            </CommandGroup>
-          ))}
-        </CommandList>
-      </Command>
+    <div className="flex flex-col gap-2 ml-4 min-w-40 border-r-2 min-h-screen">
+      <div>
+        <SidebarUserItem user={user} />
+      </div>
+      <div className="grow">
+        <Command style={{ overflow: "visible" }}>
+          <CommandList style={{ overflow: "visible" }}>
+            {menuList.map((menu: any, key: number) => (
+              <CommandGroup key={key} heading={menu.group}>
+                {menu.items.map((item: any, itemKey: number) => (
+                  <CommandItem
+                    key={itemKey}
+                    className="flex gap-2 cursor-pointer"
+                    onSelect={() => router.push(item.link)}
+                  >
+                    {item.icon}
+                    {item.text}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            ))}
+          </CommandList>
+        </Command>
+      </div>
     </div>
-  </div>)
+  )
 }

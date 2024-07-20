@@ -24,6 +24,7 @@ export interface UserType {
   email: string
   avatar: string | undefined
   introduction: string
+  is_staff: Boolean
 }
 
 // 共通のAPIリクエスト
